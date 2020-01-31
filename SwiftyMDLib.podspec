@@ -37,7 +37,7 @@ s.dependency 'IQKeyboardManagerSwift'
 #s.dependency 'Crashlytics'
 
 # 8
-s.source_files = 'Classes/**/*.swift'
+s.source_files = 'SwiftyMDLib/Classes/**/*.swift'
 
 # s.resource_bundles = {
 #   'SwiftyMDLib' => ['SwiftyMDLib/Assets/*.png']
