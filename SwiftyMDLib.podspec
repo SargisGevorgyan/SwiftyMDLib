@@ -1,42 +1,53 @@
-#
-# Be sure to run `pod lib lint SwiftyMDLib.podspec' to ensure this is a
-# valid spec before submitting.
-#
-# Any lines starting with a # are optional, but their use is encouraged
-# To learn more about a Podspec see https://guides.cocoapods.org/syntax/podspec.html
-#
-
 Pod::Spec.new do |s|
-  s.name             = 'SwiftyMDLib'
-  s.version          = '0.0.1'
-  s.summary          = 'A short description of SwiftyMDLib.'
 
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
+# 1
+s.platform = :ios
+s.ios.deployment_target = '12.0'
+s.name = "SwiftyMDLib"
+s.summary = "SwiftyMDLib MagicDevs Common Lib."
+s.requires_arc = true
 
-  s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
+# 2
+s.version = "0.0.1"
 
-  s.homepage         = 'https://github.com/SargisGevorgyan/SwiftyMDLib'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
-  s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'SargisGevorgyan' => 'gevorgian.sargis@gmail.com' }
-  s.source           = { :git => 'https://github.com/SargisGevorgyan/SwiftyMDLib.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+# 3
+s.license = { :type => "MIT", :file => "LICENSE" }
 
-  s.ios.deployment_target = '8.0'
+# 4 - Replace with your name and e-mail address
+s.author = { "Masgic Developers" => "gevorgian.sargis@gmail.com" }
 
-  s.source_files = 'SwiftyMDLib/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'SwiftyMDLib' => ['SwiftyMDLib/Assets/*.png']
-  # }
+# 5 - Replace this URL with your own GitHub page's URL (from the address bar)
+s.homepage = "https://github.com/SargisGevorgyan/SwiftyMDLib"
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+# 6 - Replace this URL with your own Git URL from "Quick Setup"
+s.source = { :git => "https://github.com/SargisGevorgyan/SwiftyMDLib.git",
+:tag => "#{s.version}" }
+
+# 7
+s.framework = "UIKit"
+s.dependency 'Alamofire'
+s.dependency 'SDWebImage'
+s.dependency 'IQKeyboardManagerSwift'
+
+# Firebase/Crashlytics
+#s.dependency 'Firebase/Core'
+#s.dependency 'Firebase/Messaging'
+#s.dependency 'Firebase/Analytics'
+#s.dependency 'Fabric'
+#s.dependency 'Crashlytics'
+
+# 8
+s.source_files = 'SwiftyMDLib/Classes/**/*'
+
+# s.resource_bundles = {
+#   'SwiftyMDLib' => ['SwiftyMDLib/Assets/*.png']
+# }
+
+# 9
+#s.resources = "SwiftyMDLib/**/*.{png,jpeg,jpg,storyboard,xib,xcassets}"
+
+# 10
+s.swift_version = "4.2"
+
 end
+
