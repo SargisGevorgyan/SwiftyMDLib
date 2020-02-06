@@ -38,10 +38,10 @@ s.dependency 'IQKeyboardManagerSwift'
 
 # 8
 s.source_files = 'SwiftyMDLib/Classes/**/*.swift'
-
- s.resource_bundles = {
-   'SwiftyMDLib' => ['SwiftyMDLib/Resources/*.*']
- }
+s.resources = 'SwiftyMDLib/Resources/*.*'
+# s.resource_bundles = {
+#   'SwiftyMDLib' => ['SwiftyMDLib/Resources/*.*']
+# }
 
 # 9
 #s.resources = "SwiftyMDLib/**/*.{png,jpeg,jpg,storyboard,xib,xcassets}"
