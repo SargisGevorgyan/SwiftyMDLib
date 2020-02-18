@@ -1,8 +1,6 @@
 //
 //  Int+Boolean.swift
-//  Dasaran
 //
-//  Created by Davit Ghushchyan on 1/14/20.
 //  Copyright © 2020 MagicDevs. All rights reserved.
 //
 

@@ -1,8 +1,6 @@
 //
 //  String+Validation.swift
-//  PersonalLawyer
 //
-//  Created by Davit Ghushchyan on 7/16/19.
 //  Copyright © 2019 MagicDevs. All rights reserved.
 //
 

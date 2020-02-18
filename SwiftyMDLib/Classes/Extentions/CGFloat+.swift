@@ -1,8 +1,6 @@
 //
 //  CGFloat+.swift
-//  Dasaran
 //
-//  Created by Davit Ghushchyan on 10/28/19.
 //  Copyright © 2019 MagicDevs. All rights reserved.
 //
 

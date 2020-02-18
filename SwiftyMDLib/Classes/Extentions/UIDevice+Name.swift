@@ -1,8 +1,6 @@
 //
 //  UIDevice+Name.swift
-//  LatinCamp
 //
-//  Created by Davit Ghushchyan on 7/9/19.
 //  Copyright © 2019 MagicDevs. All rights reserved.
 //
 

@@ -1,8 +1,6 @@
 //
 //  UIAlertController+Window.swift
-//  Dasaran
 //
-//  Created by Sargis Gevorgyan on 11/4/19.
 //  Copyright © 2019 MagicDevs. All rights reserved.
 //
 

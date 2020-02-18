@@ -1,9 +1,7 @@
 
 //
 //  ScrollView+.swift
-//  Dasaran
 //
-//  Created by Davit Ghushchyan on 10/24/19.
 //  Copyright © 2019 MagicDevs. All rights reserved.
 //
 

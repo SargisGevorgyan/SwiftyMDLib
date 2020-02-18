@@ -1,8 +1,6 @@
 //
 //  UIView+ shapeLayer.swift
-//  LatinCamp
 //
-//  Created by Davit Ghushchyan on 7/4/19.
 //  Copyright © 2019 MagicDevs. All rights reserved.
 //
 

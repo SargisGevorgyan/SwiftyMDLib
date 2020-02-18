@@ -1,9 +1,7 @@
 //
 //  CALayer+Extension.swift
-//  INeed
 //
-//  Created by Mery Mayilyan on 12/20/18.
-//  Copyright © 2018 Mery Mayilyan. All rights reserved.
+//  Copyright © 2019 MagicDevs. All rights reserved.
 //
 
 

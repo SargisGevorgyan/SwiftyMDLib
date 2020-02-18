@@ -1,8 +1,6 @@
 //
 //  UIView+Convenience.swift
-//  Dasaran
 //
-//  Created by Sargis Gevorgyan on 9/25/19.
 //  Copyright © 2019 MagicDevs. All rights reserved.
 //
 

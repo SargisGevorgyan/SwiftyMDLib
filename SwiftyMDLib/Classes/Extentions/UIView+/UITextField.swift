@@ -1,8 +1,6 @@
 //
 //  UITextField+.swift
-//  Dasaran
 //
-//  Created by Davit Ghushchyan on 9/25/19.
 //  Copyright © 2019 MagicDevs. All rights reserved.
 //
 

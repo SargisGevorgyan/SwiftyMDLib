@@ -1,8 +1,6 @@
 //
 //  NSObject+.swift
-//  RopeMoney
 //
-//  Created by Davit Ghushchyan on 9/17/19.
 //  Copyright © 2019 RopeMoney. All rights reserved.
 //
 

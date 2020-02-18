@@ -1,8 +1,6 @@
 //
 //  Collections+.swift
-//  Dasaran
 //
-//  Created by Davit Ghushchyan on 11/13/19.
 //  Copyright © 2019 MagicDevs. All rights reserved.
 //
 
