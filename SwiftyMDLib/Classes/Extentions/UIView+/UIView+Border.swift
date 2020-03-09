@@ -6,7 +6,7 @@
 
 import UIKit
 
-extension UIView {
+public extension UIView {
     func addRhombusMask(cornerRadius: CGFloat = 0) {
         let path = UIBezierPath()
         path.move(to: CGPoint(x: bounds.midX, y: bounds.minY + cornerRadius))

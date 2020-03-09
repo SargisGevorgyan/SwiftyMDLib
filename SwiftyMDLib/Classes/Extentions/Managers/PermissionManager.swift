@@ -9,7 +9,7 @@ import AVFoundation
 import Photos
 
 
-final class PermissionManager {
+open class PermissionManager {
     static let shared = PermissionManager()
     
     

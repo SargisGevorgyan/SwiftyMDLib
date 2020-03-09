@@ -12,14 +12,14 @@ private var bundleKey: UInt8 = 0
 
 let AppNotificationChangeLanguage = "ChangeLanguage"
 
-final class BundleExtension: Bundle {
+open class BundleExtension: Bundle {
     
-    override func localizedString(forKey key: String, value: String?, table tableName: String?) -> String {
+    override open func localizedString(forKey key: String, value: String?, table tableName: String?) -> String {
         return (objc_getAssociatedObject(self, &bundleKey) as? Bundle)?.localizedString(forKey: key, value: value, table: tableName) ?? super.localizedString(forKey: key, value: value, table: tableName)
     }
 }
 
-extension Bundle {
+public extension Bundle {
     
     static let once: Void = { object_setClass(Bundle.main, type(of: BundleExtension())) }()
     
@@ -54,7 +54,7 @@ extension Bundle {
     }
 }
 
-extension Locale {
+public extension Locale {
     static var current: Locale? {
         return Locale(identifier: Bundle.currentLanguage().code)
     }

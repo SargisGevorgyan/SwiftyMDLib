@@ -6,7 +6,7 @@
 
 import Foundation
 
-extension Array where Element == Double {
+public extension Array where Element == Double {
     func iscontainOnlyZero() -> Bool {
         for item in self {
             if item != 0 {
@@ -17,7 +17,7 @@ extension Array where Element == Double {
     }
 }
 
-extension Array where Element == Int {
+public extension Array where Element == Int {
     func iscontainOnlyZero() -> Bool {
         for item in self {
             if item != 0 {
@@ -28,7 +28,7 @@ extension Array where Element == Int {
     }
 }
 
-extension Dictionary where Value == Int {
+public extension Dictionary where Value == Int {
     func iscontainOnlyZero() -> Bool {
         for item in self.values {
                if item != 0 {
@@ -38,7 +38,7 @@ extension Dictionary where Value == Int {
            return true
        }
 }
-extension Dictionary where Value == Double {
+public extension Dictionary where Value == Double {
     func iscontainOnlyZero() -> Bool {
         for item in self.values {
                if item != 0 {

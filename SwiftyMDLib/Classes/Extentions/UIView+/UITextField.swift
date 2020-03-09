@@ -9,7 +9,7 @@ import UIKit
 let passwordShowIcon = #imageLiteral(resourceName: "eye_closed")//""
 let passwordHideIcon = #imageLiteral(resourceName: "eye") // ""
 
-extension UITextField {
+public extension UITextField {
     
     var isEmpty: Bool {
         return text?.isEmpty ?? false
@@ -50,7 +50,4 @@ extension UITextField {
         isSecureTextEntry = !isSecureTextEntry
         clearsOnBeginEditing = false
     }
-    
-    
-    
 }

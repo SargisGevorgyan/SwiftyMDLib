@@ -6,7 +6,7 @@
 
 import UIKit
 
-extension UIFont {
+public extension UIFont {
     
     func convertToAwesome(_ size: CGFloat = 15) -> UIFont{
         if let font =  UIFont(name: "FontAwesome", size: size){

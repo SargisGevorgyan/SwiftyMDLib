@@ -7,7 +7,7 @@
 import Foundation
 import SystemConfiguration
 
-class Reachability {
+open class Reachability {
     var hostname: String?
     var isRunning = false
     var isReachableOnWWAN: Bool
@@ -52,7 +52,7 @@ class Reachability {
     deinit { stop() }
 }
 
-extension Reachability {
+public extension Reachability {
     func start() throws {
         guard let reachability = reachability, !isRunning else { return }
         var context = SCNetworkReachabilityContext(version: 0, info: nil, retain: nil, release: nil, copyDescription: nil)

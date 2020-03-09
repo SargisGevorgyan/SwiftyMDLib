@@ -7,7 +7,7 @@
 import UIKit
 
 
-extension UIView {
+public extension UIView {
     
     func applyShadowWithShapeLayer( shadowLayer: inout CAShapeLayer!, fillColor: UIColor, cornerRadius: CGFloat)-> CAShapeLayer {
         if shadowLayer == nil {

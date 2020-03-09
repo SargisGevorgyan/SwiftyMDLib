@@ -5,7 +5,7 @@
 //
 
 
-extension Date {
+public extension Date {
 
     static let D_MINUTE = 60
     static let D_HOUR = 3600

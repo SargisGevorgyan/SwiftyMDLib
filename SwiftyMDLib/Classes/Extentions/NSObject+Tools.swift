@@ -6,7 +6,7 @@
 
 import UIKit
 
-extension NSObject {
+public extension NSObject {
 
     static var id: String {
         return String(describing: self)

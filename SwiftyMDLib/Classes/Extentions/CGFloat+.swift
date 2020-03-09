@@ -9,14 +9,14 @@ import Foundation
 
 
 
-extension CGFloat {
+public extension CGFloat {
     
     var scaled: CGFloat {
         return self * UIDevice.scale
     }
 }
 
-extension CGRect {
+public extension CGRect {
     
     var scaled: CGRect {
         var frame = self
@@ -29,7 +29,7 @@ extension CGRect {
 }
 
 
-extension Int {
+public extension Int {
     
     var scaled: CGFloat {
         return CGFloat(self).scaled
@@ -37,7 +37,7 @@ extension Int {
     
 }
 
-extension Double {
+public extension Double {
     var scaled: CGFloat {
         return CGFloat(self).scaled
     }

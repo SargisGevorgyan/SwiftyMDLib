@@ -6,7 +6,7 @@
 
 import Foundation
 
-extension UIAlertController {
+public extension UIAlertController {
     
     func show(_ animated : Bool = true) {
         DispatchQueue.main.async() {

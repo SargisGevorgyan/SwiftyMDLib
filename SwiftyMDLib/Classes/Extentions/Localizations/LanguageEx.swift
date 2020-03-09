@@ -6,7 +6,7 @@
 
 import UIKit
 
-enum LanguageEx: Int, Equatable,CaseIterable, Codable {
+public enum LanguageEx: Int, Equatable,CaseIterable, Codable {
     case english = 0
     case russian = 1
     case armenian = 2
@@ -21,7 +21,7 @@ enum LanguageEx: Int, Equatable,CaseIterable, Codable {
 }
 
 
-extension LanguageEx {
+public extension LanguageEx {
     
     var code: String {
         switch self {
@@ -51,7 +51,7 @@ extension LanguageEx {
     }
 }
 
-extension LanguageEx {
+public extension LanguageEx {
     
     init?(languageCode: String?) {
         guard let languageCode = languageCode else { return nil }
@@ -65,7 +65,7 @@ extension LanguageEx {
     }
 }
 
-extension String {
+public extension String {
     func localize() -> String {
         return NSLocalizedString(self, comment: "")
     }

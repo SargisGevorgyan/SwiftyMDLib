@@ -6,7 +6,7 @@
 
 import Foundation
 
-extension String {
+public extension String {
     
     func isValidEmail() -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
@@ -53,36 +53,36 @@ extension String {
     
 }
 
-extension Float {
+public extension Float {
     var clean: String {
         return self.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0f", self) : String(self)
     }
 }
 
-extension Double {
+public extension Double {
     var clean: String {
         return self.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0f", self) : String(self)
     }
 }
-extension String {
+public extension String {
     var floatValue: Float {
         return (self as NSString).floatValue
     }
 }
 
-extension String {
+public extension String {
     var doubleValue: Double {
         return (self as NSString).doubleValue
     }
 }
 
-extension String {
+public extension String {
     var intValue: Int {
         return (self as NSString).integerValue
     }
 }
 
-extension String {
+public extension String {
     var fileURL: URL {
         return URL(fileURLWithPath: self)
     }
@@ -102,7 +102,7 @@ extension String {
    }
 }
 
-extension String {
+public extension String {
 
     /// Returns a string with all non-numeric characters removed
     var numericString: String {

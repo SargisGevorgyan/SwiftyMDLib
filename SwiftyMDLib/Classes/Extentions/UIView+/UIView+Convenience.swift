@@ -6,7 +6,7 @@
 
 import UIKit
 
-extension UIView {
+public extension UIView {
     
     func setFrameX(_ x: CGFloat) {
         var _frame = frame
@@ -123,7 +123,7 @@ extension UIView {
 }
 
 
-extension UIView {
+public extension UIView {
     func findConstraint(layoutAttribute: NSLayoutConstraint.Attribute) -> NSLayoutConstraint? {
         if let constraints = superview?.constraints {
             for constraint in constraints where itemMatch(constraint: constraint, layoutAttribute: layoutAttribute) {

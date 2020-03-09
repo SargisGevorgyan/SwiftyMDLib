@@ -10,21 +10,19 @@ import Foundation
 
 import UIKit
 private var layoutHelperKey = "LayoutHelper+Key"
-extension UIView {
-    var mmTextLayout:LayoutHelper {
-        get {
-            if let n = objc_getAssociatedObject(self, &layoutHelperKey) as? LayoutHelper {
-                return n
-            } else {
-                let d = LayoutHelper(self)
-                objc_setAssociatedObject(self, &layoutHelperKey, d, .OBJC_ASSOCIATION_RETAIN)
-                return d
-            }
+public extension UIView {
+    var mdLayout:LayoutHelper {
+        if let n = objc_getAssociatedObject(self, &layoutHelperKey) as? LayoutHelper {
+            return n
+        } else {
+            let d = LayoutHelper(self)
+            objc_setAssociatedObject(self, &layoutHelperKey, d, .OBJC_ASSOCIATION_RETAIN)
+            return d
         }
     }
 }
 
-class LayoutHelper: NSObject {
+open class LayoutHelper: NSObject {
     enum AxisType {
         case equal(constant: CGFloat)
         case greaterThanOrEqual(constant: CGFloat)
@@ -71,7 +69,7 @@ class LayoutHelper: NSObject {
             self.view.removeConstraint(c)
         }
     }
- 
+    
     @discardableResult
     func setLeft(anchor: NSLayoutXAxisAnchor, type: AxisType) -> Self {
         self.delete(type: .left)
@@ -166,9 +164,9 @@ class LayoutHelper: NSObject {
             return selfAnchor.constraint(equalTo: anchor, multiplier: multiplier, constant: constant)
         case .lessThanOrEqualTo(let anchor, let multiplier, let constant):
             return selfAnchor.constraint(lessThanOrEqualTo: anchor, multiplier: multiplier, constant: constant)
-
+            
         case .greaterThanOrEqualTo(let anchor, let multiplier, let constant):
-           return  selfAnchor.constraint(greaterThanOrEqualTo: anchor, multiplier: multiplier, constant: constant)
+            return  selfAnchor.constraint(greaterThanOrEqualTo: anchor, multiplier: multiplier, constant: constant)
         }
     }
     

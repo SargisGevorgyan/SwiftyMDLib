@@ -6,7 +6,7 @@
 
 import Foundation
 
-extension Dictionary {
+public extension Dictionary {
     func allKeys() -> Array<Any> {
         var items = [Any]()
         

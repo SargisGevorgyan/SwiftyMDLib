@@ -19,7 +19,7 @@ protocol ImagePickerAlertControllerDelegate: CanPresent {
 }
 
 
-class ImagePickerAlertController: UIViewController,  UINavigationControllerDelegate, UIImagePickerControllerDelegate, CanPresent {
+open class ImagePickerAlertController: UIViewController,  UINavigationControllerDelegate, UIImagePickerControllerDelegate, CanPresent {
     
     private var imagePicker = UIImagePickerController()
     
@@ -70,7 +70,7 @@ class ImagePickerAlertController: UIViewController,  UINavigationControllerDeleg
         delegate?.dismiss(animated: true, completion: nil)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         var image = info[.originalImage] as? UIImage
         if let editedImage = info[.editedImage] as? UIImage {
             image = editedImage
@@ -78,7 +78,7 @@ class ImagePickerAlertController: UIViewController,  UINavigationControllerDeleg
         print("Selected Image Path is: \n assets-library://asset/asset.HEIC?id=E0BFE0C9-4C02-42C2-A308-3F8AF32EFAD8&ext=HEIC")
         delegate?.imagePickerAlertController(self, didSelected: image)
     }
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+    public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         print("Canceled Picking")
         delegate?.dismiss(animated: true, completion: nil)
     }

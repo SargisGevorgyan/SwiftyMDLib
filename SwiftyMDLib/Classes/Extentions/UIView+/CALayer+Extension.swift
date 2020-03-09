@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension CALayer {
+ public extension CALayer {
     
     func addBorder(edge: UIRectEdge, color: UIColor, thickness: CGFloat) {
         let border = CALayer()

@@ -6,7 +6,7 @@
 
 import Foundation
 
-extension Array where Element: Hashable {
+public extension Array where Element: Hashable {
     var uniques: Array {
         var buffer = Array()
         var added = Set<Element>()
