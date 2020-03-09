@@ -44,7 +44,7 @@ s.source_files = 'SwiftyMDLib/Classes/**/*.swift'
 # }
 
 # 9
-s.resources = "SwiftyMDLib/**/*"
+s.resources = "SwiftyMDLib/Resources/**/*"
 
 # 10
 s.swift_version = "4.2"
