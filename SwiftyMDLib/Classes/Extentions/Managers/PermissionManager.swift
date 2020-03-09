@@ -15,7 +15,7 @@ open class PermissionManager {
     
     private init(){}
     
-    static func permissionForCamera(_ vc: CanPresent, picker: UIImagePickerController) {
+    public static func permissionForCamera(_ vc: CanPresent, picker: UIImagePickerController) {
         switch AVCaptureDevice.authorizationStatus(for: AVMediaType.video) {
         case .authorized, .notDetermined:
             AVCaptureDevice.requestAccess(for: .video) { success in

@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-protocol CanPresent: class {
+public protocol CanPresent: class {
     func dismiss(animated: Bool, completion: (() -> Void)?)
     func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)?)
 }
@@ -27,7 +27,7 @@ open class ImagePickerAlertController: UIViewController,  UINavigationController
     var isCropperRequired = true
     
     
-    func openAlert() {
+    open func openAlert() {
         let alert = UIAlertController(title: "Choose Source", message: nil, preferredStyle: .actionSheet)
         let openGalleryAction = UIAlertAction(title: "Gallery", style: .default) { (_) in
             print("Gallery Open")

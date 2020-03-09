@@ -1,9 +1,6 @@
 //
 //  UIView+Constraint.swift
-//  EditText
 //
-//  Created by Millman on 2019/5/30.
-//  Copyright © 2019 Millman. All rights reserved.
 //
 
 import Foundation
@@ -23,13 +20,13 @@ public extension UIView {
 }
 
 open class LayoutHelper: NSObject {
-    enum AxisType {
+    public enum AxisType {
         case equal(constant: CGFloat)
         case greaterThanOrEqual(constant: CGFloat)
         case lessThanOrEqual(constant: CGFloat)
     }
     
-    enum DimensionType {
+    public enum DimensionType {
         case equal(constant: CGFloat)
         case greaterThanOrEqual(constant: CGFloat)
         case lessThanOrEqual(constant: CGFloat)
@@ -38,7 +35,7 @@ open class LayoutHelper: NSObject {
         case lessThanOrEqualTo(anchor: NSLayoutDimension, multiplier: CGFloat, constant: CGFloat)
     }
     
-    enum ConstraintType: String, CaseIterable {
+    public enum ConstraintType: String, CaseIterable {
         case left
         case right
         case top
@@ -63,7 +60,7 @@ open class LayoutHelper: NSObject {
         return constraint[type]
     }
     
-    func delete(type: ConstraintType) {
+    open func delete(type: ConstraintType) {
         if let c = constraint[type] {
             c.isActive = false
             self.view.removeConstraint(c)
@@ -71,7 +68,7 @@ open class LayoutHelper: NSObject {
     }
     
     @discardableResult
-    func setLeft(anchor: NSLayoutXAxisAnchor, type: AxisType) -> Self {
+    open func setLeft(anchor: NSLayoutXAxisAnchor, type: AxisType) -> Self {
         self.delete(type: .left)
         let layout = self.xAxisAnchor(selfAnchor: self.view.leftAnchor, other: anchor, type: type)
         constraint[.left] = layout
@@ -79,7 +76,7 @@ open class LayoutHelper: NSObject {
         return self
     }
     @discardableResult
-    func setRight(anchor: NSLayoutXAxisAnchor, type: AxisType) -> Self {
+    open func setRight(anchor: NSLayoutXAxisAnchor, type: AxisType) -> Self {
         self.delete(type: .right)
         let layout = self.xAxisAnchor(selfAnchor: self.view.rightAnchor, other: anchor, type: type)
         constraint[.right] = layout
@@ -87,7 +84,7 @@ open class LayoutHelper: NSObject {
         return self
     }
     @discardableResult
-    func setLeading(anchor: NSLayoutXAxisAnchor, type: AxisType) -> Self {
+    open func setLeading(anchor: NSLayoutXAxisAnchor, type: AxisType) -> Self {
         self.delete(type: .leading)
         let layout = self.xAxisAnchor(selfAnchor: self.view.leadingAnchor, other: anchor, type: type)
         constraint[.leading] = layout
@@ -95,7 +92,7 @@ open class LayoutHelper: NSObject {
         return self
     }
     @discardableResult
-    func setTrailing(anchor: NSLayoutXAxisAnchor, type: AxisType) -> Self {
+    open func setTrailing(anchor: NSLayoutXAxisAnchor, type: AxisType) -> Self {
         self.delete(type: .trailing)
         let layout = self.xAxisAnchor(selfAnchor: self.view.trailingAnchor, other: anchor, type: type)
         constraint[.trailing] = layout
@@ -103,7 +100,7 @@ open class LayoutHelper: NSObject {
         return self
     }
     @discardableResult
-    func setCenterX(anchor: NSLayoutXAxisAnchor, type: AxisType) -> Self {
+    open func setCenterX(anchor: NSLayoutXAxisAnchor, type: AxisType) -> Self {
         self.delete(type: .centerX)
         let layout = self.xAxisAnchor(selfAnchor: self.view.centerXAnchor, other: anchor, type: type)
         constraint[.centerX] = layout
@@ -111,7 +108,7 @@ open class LayoutHelper: NSObject {
         return self
     }
     @discardableResult
-    func setTop(anchor: NSLayoutYAxisAnchor, type: AxisType) -> Self {
+    open func setTop(anchor: NSLayoutYAxisAnchor, type: AxisType) -> Self {
         self.delete(type: .top)
         let layout = self.yAxisAnchor(selfAnchor: self.view.topAnchor, other: anchor, type: type)
         constraint[.top] = layout
@@ -119,7 +116,7 @@ open class LayoutHelper: NSObject {
         return self
     }
     @discardableResult
-    func setBottom(anchor: NSLayoutYAxisAnchor, type: AxisType) -> Self {
+    open func setBottom(anchor: NSLayoutYAxisAnchor, type: AxisType) -> Self {
         self.delete(type: .bottom)
         let layout = self.yAxisAnchor(selfAnchor: self.view.bottomAnchor, other: anchor, type: type)
         constraint[.bottom] = layout
@@ -127,7 +124,7 @@ open class LayoutHelper: NSObject {
         return self
     }
     @discardableResult
-    func setCenterY(anchor: NSLayoutYAxisAnchor, type: AxisType) -> Self {
+    open func setCenterY(anchor: NSLayoutYAxisAnchor, type: AxisType) -> Self {
         self.delete(type: .centerY)
         let layout = self.yAxisAnchor(selfAnchor: self.view.centerYAnchor, other: anchor, type: type)
         constraint[.centerY] = layout
@@ -135,7 +132,7 @@ open class LayoutHelper: NSObject {
         return self
     }
     @discardableResult
-    func setWidth(type: DimensionType) -> Self {
+    open func setWidth(type: DimensionType) -> Self {
         self.delete(type: .width)
         
         let layout = self.dimension(selfAnchor: self.view.widthAnchor, type: type)
@@ -144,7 +141,7 @@ open class LayoutHelper: NSObject {
         return self
     }
     @discardableResult
-    func setHeight(type: DimensionType) -> Self {
+    open func setHeight(type: DimensionType) -> Self {
         self.delete(type: .height)
         let layout = self.dimension(selfAnchor: self.view.heightAnchor, type: type)
         constraint[.height] = layout
@@ -152,7 +149,7 @@ open class LayoutHelper: NSObject {
         return self
     }
     
-    func dimension(selfAnchor: NSLayoutDimension, type: DimensionType) -> NSLayoutConstraint {
+    open func dimension(selfAnchor: NSLayoutDimension, type: DimensionType) -> NSLayoutConstraint {
         switch type {
         case .equal(let constant):
             return selfAnchor.constraint(equalToConstant: constant)
@@ -170,7 +167,7 @@ open class LayoutHelper: NSObject {
         }
     }
     
-    func yAxisAnchor(selfAnchor: NSLayoutYAxisAnchor ,other : NSLayoutYAxisAnchor, type: AxisType) -> NSLayoutConstraint {
+    open func yAxisAnchor(selfAnchor: NSLayoutYAxisAnchor ,other : NSLayoutYAxisAnchor, type: AxisType) -> NSLayoutConstraint {
         switch type {
         case .equal(let constant):
             return selfAnchor.constraint(equalTo: other, constant: constant)
@@ -181,7 +178,7 @@ open class LayoutHelper: NSObject {
         }
     }
     
-    func xAxisAnchor(selfAnchor: NSLayoutXAxisAnchor ,other : NSLayoutXAxisAnchor, type: AxisType) -> NSLayoutConstraint {
+    open func xAxisAnchor(selfAnchor: NSLayoutXAxisAnchor ,other : NSLayoutXAxisAnchor, type: AxisType) -> NSLayoutConstraint {
         switch type {
         case .equal(let constant):
             return selfAnchor.constraint(equalTo: other, constant: constant)
