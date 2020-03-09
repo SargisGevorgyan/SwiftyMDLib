@@ -8,7 +8,7 @@ s.summary = "SwiftyMDLib MagicDevs Common Lib."
 s.requires_arc = true
 
 # 2
-s.version = "0.0.6"
+s.version = "0.0.7"
 
 # 3
 s.license = { :type => "MIT", :file => "LICENSE" }
@@ -44,10 +44,11 @@ s.source_files = 'SwiftyMDLib/Classes/**/*.swift'
 # }
 
 # 9
-#s.resources = "SwiftyMDLib/**/*.{png,jpeg,jpg,storyboard,xib,xcassets}"
+s.resources = "SwiftyMDLib/**/*"
 
 # 10
 s.swift_version = "4.2"
 
 end
-
+# cd /Users/sargisgevorgian/Documents/Libraries/SwiftyMDLib 
+# pod trunk push
