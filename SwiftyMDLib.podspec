@@ -8,7 +8,7 @@ s.summary = "SwiftyMDLib MagicDevs Common Lib."
 s.requires_arc = true
 
 # 2
-s.version = "0.0.9.7"
+s.version = "0.0.9.8"
 
 # 3
 s.license = { :type => "MIT", :file => "LICENSE" }
@@ -37,7 +37,7 @@ s.dependency 'IQKeyboardManagerSwift'
 #s.dependency 'Crashlytics'
 
 # 8
-s.source_files = 'SwiftyMDLib/Classes/**/*.swift'
+s.source_files = 'SwiftyMDLib/Classes/**/*'
 #s.resources = 'SwiftyMDLib/Resources/*.*'
 # s.resource_bundles = {
 #   'SwiftyMDLib' => ['SwiftyMDLib/Resources/*.*']
