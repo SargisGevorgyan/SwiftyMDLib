@@ -6,11 +6,10 @@
 
 import UIKit
 //// MARK: - Notification
-//let AppNotificationChangeLanguage = Notification.Name("ChangeLanguage")
+public let AppNotificationChangeLanguage = Notification.Name("ChangeLanguage")
 
 private var bundleKey: UInt8 = 0
 
-let AppNotificationChangeLanguage = "ChangeLanguage"
 
 open class BundleExtension: Bundle {
     
@@ -36,7 +35,7 @@ public extension Bundle {
                 
         objc_setAssociatedObject(Bundle.main, &bundleKey, Bundle(path: path), objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         
-        NotificationCenter.default.post(name: Notification.Name(AppNotificationChangeLanguage), object: nil)
+        NotificationCenter.default.post(name: AppNotificationChangeLanguage, object: nil)
     }
     
     static func currentLanguage() -> LanguageEx {

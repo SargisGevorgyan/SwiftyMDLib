@@ -12,6 +12,10 @@ public extension NSObject {
         return String(describing: self)
     }
     
+    static var ncId: String {
+        return "NC" + String(describing: self)
+    }
+    
     func instantiateController(withIdentifier identifier: String) -> UIViewController? {
         
         var storyBoard : UIStoryboard
@@ -81,19 +85,7 @@ public extension NSObject {
                 
             }
         }
-        if arrStoryBoards.count == 0 {
-            arrStoryBoards = [ // Sort a arac @st mtnelu mej@ unecac ejeri qanaki, kam @st im karciqi vor@ hachax kmtnen
-                "Main",
-                "Dialogs",
-                "Notification",
-                "Target",
-                "Calendar",
-                "Stats",
-                "Profile",
-                "Mailing",
-                "Authentication"
-            ]
-        }
+        
         return arrStoryBoards
     }
 }
