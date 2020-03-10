@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 
+@available(iOS 10.0, *)
 final class CodableManager {
     static let shared = CodableManager()
     let decoder = JSONDecoder()

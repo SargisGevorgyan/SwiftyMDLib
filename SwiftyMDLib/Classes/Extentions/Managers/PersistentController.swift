@@ -13,6 +13,8 @@ enum EntityName: String {
     case storedModel = "StoredModel"
 }
 
+
+@available(iOS 10.0, *)
 class PersistentController {
     let containerName: String
     var viewContext: NSManagedObjectContext {
