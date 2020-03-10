@@ -56,7 +56,7 @@ open class LayoutHelper: NSObject {
         self.view.translatesAutoresizingMaskIntoConstraints = false
     }
     
-    subscript(type: ConstraintType) -> NSLayoutConstraint? {
+    public subscript(type: ConstraintType) -> NSLayoutConstraint? {
         return constraint[type]
     }
     
@@ -187,5 +187,11 @@ open class LayoutHelper: NSObject {
         case .lessThanOrEqual(let constant):
             return  selfAnchor.constraint(lessThanOrEqualTo: other, constant: constant)
         }
+    }
+}
+
+public extension UIView {
+    func constraintWith(identifier: String) -> NSLayoutConstraint? {
+        return self.constraints.first(where: {$0.identifier == identifier})
     }
 }
