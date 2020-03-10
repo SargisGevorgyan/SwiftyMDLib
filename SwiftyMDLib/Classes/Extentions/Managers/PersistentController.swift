@@ -13,8 +13,6 @@ enum EntityName: String {
     case storedModel = "StoredModel"
 }
 
-
-@available(iOS 10.0, *)
 class PersistentController {
     let containerName: String
     var viewContext: NSManagedObjectContext {
@@ -25,6 +23,7 @@ class PersistentController {
         return persistentContainer.newBackgroundContext()
     }
     
+    @available(iOS 10.0, *)
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: self.containerName)
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
