@@ -695,14 +695,6 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
     return NO;
 }
 
-- (BOOL)shouldAutomaticallyForwardRotationMethods{
-    return NO;
-}
-
-- (BOOL)automaticallyForwardAppearanceAndRotationMethodsToChildViewControllers{
-    return NO;
-}
-
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad {
@@ -757,62 +749,6 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
     }
     else if (self.openSide == MMDrawerSideRight) {
         [self.rightDrawerViewController endAppearanceTransition];
-    }
-}
-
-#pragma mark Rotation
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    //If a rotation begins, we are going to cancel the current gesture and reset transform and anchor points so everything works correctly
-    for(UIGestureRecognizer * gesture in self.childControllerContainerView.gestureRecognizers){
-        if(gesture.state == UIGestureRecognizerStateChanged){
-            [gesture setEnabled:NO];
-            [gesture setEnabled:YES];
-            [self resetDrawerVisualStateForDrawerSide:self.openSide];
-            break;
-        }
-    }
-    for(UIViewController * childViewController in self.childViewControllers){
-        [childViewController willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    }
-}
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
-    [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    //We need to support the shadow path rotation animation
-    //Inspired from here: http://blog.radi.ws/post/8348898129/calayers-shadowpath-and-uiview-autoresizing
-    if(self.showsShadow){
-        CGPathRef oldShadowPath = self.centerContainerView.layer.shadowPath;
-        if(oldShadowPath){
-            CFRetain(oldShadowPath);
-        }
-        
-        [self updateShadowForCenterView];
-        
-        if (oldShadowPath) {
-            [self.centerContainerView.layer addAnimation:((^ {
-                CABasicAnimation *transition = [CABasicAnimation animationWithKeyPath:@"shadowPath"];
-                transition.fromValue = (__bridge id)oldShadowPath;
-                transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-                transition.duration = duration;
-                return transition;
-            })()) forKey:@"transition"];
-            CFRelease(oldShadowPath);
-        }
-    }
-    for(UIViewController * childViewController in self.childViewControllers){
-        [childViewController willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    }
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
-    return YES;
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    for(UIViewController * childViewController in self.childViewControllers){
-        [childViewController didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     }
 }
 
@@ -981,10 +917,18 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
             [_childControllerContainerView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
             [self.view addSubview:_childControllerContainerView];
             _childControllerContainerView.translatesAutoresizingMaskIntoConstraints = NO;
-            [_childControllerContainerView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor].active = YES;
-            [_childControllerContainerView.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor].active = YES;
-            [_childControllerContainerView.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor].active = YES;
-            [_childControllerContainerView.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor].active = YES;
+            if (@available(iOS 11.0, *)) {
+                [_childControllerContainerView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor].active = YES;
+                [_childControllerContainerView.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor].active = YES;
+                [_childControllerContainerView.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor].active = YES;
+                [_childControllerContainerView.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor].active = YES;
+            } else {
+                // Fallback on earlier versions
+                [_childControllerContainerView.topAnchor constraintEqualToAnchor:self.view.topAnchor].active = YES;
+                [_childControllerContainerView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
+                [_childControllerContainerView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = YES;
+                [_childControllerContainerView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
+            }
             
         }
         
