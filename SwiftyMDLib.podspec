@@ -8,7 +8,7 @@ s.summary = "SwiftyMDLib MagicDevs Common Lib."
 s.requires_arc = true
 
 # 2
-s.version = "0.0.10"
+s.version = "0.0.10.1"
 
 # 3
 s.license = { :type => "MIT", :file => "LICENSE" }
@@ -25,7 +25,7 @@ s.source = { :git => "https://github.com/SargisGevorgyan/SwiftyMDLib.git",
 
 # 7
 s.framework = "UIKit"
-s.dependency 'Alamofire'
+s.dependency 'Alamofire','4.9.1'
 s.dependency 'SDWebImage'
 s.dependency 'IQKeyboardManagerSwift'
 s.dependency 'lottie-ios'
