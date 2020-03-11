@@ -33,30 +33,21 @@ open class Loading {
         loadingView.backgroundColor = backColor
         view.addSubview(loadingView)
         view.bringSubviewToFront(loadingView)
-//        loadingView.center = view.center
+        //        loadingView.center = view.center
         
         container = UIView(frame: CGRect(x: 0, y: 0, width: loadingView.frame.width, height: loadingView.frame.height))
         container.backgroundColor = backColor
         container.clipsToBounds = true
         loadingView.addSubview(container)
-//        container.center = loadingView.center
+        //        container.center = loadingView.center
         
         activityIndicator = UIActivityIndicatorView.init(style: .white)
-       
+        
         activityIndicator.color = indicatorColor
         activityIndicator.startAnimating()
         activityIndicator.center = container.center
-        animationView = AnimationView(frame: CGRect(x: 0, y: 0, width: 56.scaled, height: 32.scaled))
-        animationView?.loopMode = .loop
-        animationView?.animation  = Animation.named("loader")
         DispatchQueue.main.async {
-//            container.addSubview(activityIndicator)
-            container.addSubview(animationView!)
-            animationView?.mdLayout.setWidth(type: .equal(constant: 56.scaled))
-            animationView?.mdLayout.setHeight(type: .equal(constant: 32.scaled))
-            animationView?.mdLayout.setCenterX(anchor: container.centerXAnchor, type: .equal(constant: 0))
-            animationView?.mdLayout.setCenterY(anchor: container.centerYAnchor, type: .equal(constant: 0))
-            animationView?.play()
+            container.addSubview(activityIndicator)
             UIApplication.shared.isNetworkActivityIndicatorVisible = true
         }
     }

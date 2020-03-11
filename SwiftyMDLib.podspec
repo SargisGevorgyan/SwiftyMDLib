@@ -8,7 +8,7 @@ s.summary = "SwiftyMDLib MagicDevs Common Lib."
 s.requires_arc = true
 
 # 2
-s.version = "0.0.10.3"
+s.version = "0.0.10.4"
 
 # 3
 s.license = { :type => "MIT", :file => "LICENSE" }
@@ -45,7 +45,7 @@ s.source_files = 'SwiftyMDLib/Classes/**/*.{swift,m,h}'
 # }
 
 # 9
-s.resources = "SwiftyMDLib/Resources/**/*"
+s.resources = "SwiftyMDLib/Resources/**/*.{otf,xcdatamodeld,xcassets}"
 
 # 10
 s.swift_version = "4.2"
