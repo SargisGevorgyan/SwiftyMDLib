@@ -460,15 +460,15 @@ open class MDWebServiceManager {
         }
     }
     
-    class func unAuthorizedHandler(_ response: DataResponse<Any>?) {
+    open class func unAuthorizedHandler(_ response: DataResponse<Any>?) {
         
     }
     
-    class func noInternetHandler( _ completion: @escaping ()->()) {
+    open class func noInternetHandler( _ completion: @escaping ()->()) {
 
     }
     
-    class func somethingWentWrongHandler(_ response: DataResponse<Any>?, _ completion: @escaping ()->()) {
+    open class func somethingWentWrongHandler(_ response: DataResponse<Any>?, _ completion: @escaping ()->()) {
        
     }
 }
