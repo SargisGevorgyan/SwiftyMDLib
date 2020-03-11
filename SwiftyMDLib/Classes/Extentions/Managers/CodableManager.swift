@@ -1,8 +1,6 @@
 //
 //  CodableManager.swift
-//  PersonalLawyer
 //
-//  Created by Davit Ghushchyan on 8/4/19.
 //  Copyright © 2019 MagicDevs. All rights reserved.
 //
 
@@ -10,8 +8,8 @@ import UIKit
 import CoreData
 
 
-final class CodableManager {
-    static let shared = CodableManager()
+open class CodableManager {
+    public static let shared = CodableManager()
     let decoder = JSONDecoder()
     let encoder = JSONEncoder()
     private var persistentController = PersistentController(containerName: "Storage")
@@ -19,7 +17,7 @@ final class CodableManager {
     private init() {
     }
     
-    func saveModelFor<T:Codable>(key:String, model: T) {
+    open func saveModelFor<T:Codable>(key:String, model: T) {
         let data = try? encoder.encode(model)
         if let object = getFromDB(key: getKeyFor(key)) {
             object.data = data
@@ -32,18 +30,18 @@ final class CodableManager {
         persistentController.saveViewContext()
     }
     
-    func saveStringFor(key:String, value: String? ) {
+    open func saveStringFor(key:String, value: String? ) {
         let defaults = UserDefaults.standard
         defaults.set(value, forKey: key)
     }
     
-    func getStringFor(key: String) -> String? {
+    open func getStringFor(key: String) -> String? {
         let defaults = UserDefaults.standard
         let value = defaults.string(forKey: key)
         return value
     }
     
-    func saveModelInUserDefaultsFor<T:Codable>(key:String, model:T) {
+    open func saveModelInUserDefaultsFor<T:Codable>(key:String, model:T) {
         do {
             let encoded = try encoder.encode(model)
             let defaults = UserDefaults.standard
@@ -53,7 +51,7 @@ final class CodableManager {
         }
     }
     
-    func getModelFromUserDefaults<T:Codable>(key:String) -> T? {
+    open func getModelFromUserDefaults<T:Codable>(key:String) -> T? {
         guard let loadedData = UserDefaults.standard.value(forKey: key) as? Data  else {
                    print("couldn't find data ")
                    return nil
@@ -64,7 +62,7 @@ final class CodableManager {
         return loadedModel
     }
     
-    func getModelFor<T: Codable>(key: String) -> T? {
+    open func getModelFor<T: Codable>(key: String) -> T? {
         
         guard let object = getFromDB(key: getKeyFor(key)) else {
             return nil
@@ -87,12 +85,12 @@ final class CodableManager {
         return object?.first
     }
     
-    func eraseDB() {
+    open func eraseDB() {
         persistentController.eraseEntity(.storedModel)
     }
     
     
-    func getKeyFor(_ key: String) -> String {
+    open func getKeyFor(_ key: String) -> String {
         return key
     }
     

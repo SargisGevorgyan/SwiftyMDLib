@@ -23,7 +23,7 @@ enum FileType:String , Codable {
     }
 }
 
-struct File: Codable {
+public struct File: Codable {
     var type: FileType
     var data: Data
     var name: String?
@@ -31,7 +31,7 @@ struct File: Codable {
 
 
 open class MDWebServiceManager {
-    enum InternetRequirementState {
+   public enum InternetRequirementState {
         case required
         case nonessential
         case byDefault
@@ -315,7 +315,7 @@ open class MDWebServiceManager {
     
     
     // MARK: - MULTYPART
-    class func multypartRequest<T: Codable> (_ strURL: String,
+    open class func multypartRequest<T: Codable> (_ strURL: String,
                                              params: Data?,
                                              isSingleObject: Bool = true,
                                              method: HTTPMethod = .post,

@@ -1,8 +1,6 @@
 //
 //  PersistentController.swift
-//  LatinCamp
 //
-//  Created by Davit Ghushchyan on 3/26/19.
 //  Copyright © 2019 MagicDevs. All rights reserved.
 //
 
