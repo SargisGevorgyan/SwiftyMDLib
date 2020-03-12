@@ -9,10 +9,11 @@ import CoreData
 
 
 open class CodableManager {
+    public static var STORAGENAME = "SavedCodable"
     public static let shared = CodableManager()
     let decoder = JSONDecoder()
     let encoder = JSONEncoder()
-    private var persistentController = PersistentController(containerName: "Storage")
+    private var persistentController = PersistentController(containerName: CodableManager.STORAGENAME)
     
     private init() {
     }
