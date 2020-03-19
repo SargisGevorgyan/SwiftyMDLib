@@ -1,12 +1,14 @@
 //
 //  UIView+Convenience.swift
+//  Dasaran
 //
+//  Created by Sargis Gevorgyan on 9/25/19.
 //  Copyright © 2019 MagicDevs. All rights reserved.
 //
 
 import UIKit
 
-public extension UIView {
+extension UIView {
     
     func setFrameX(_ x: CGFloat) {
         var _frame = frame
@@ -113,6 +115,9 @@ public extension UIView {
     
     static func scaleSubViewsFontSizes(deviceScale : CGFloat = UIDevice.scale, view : UIView) {
         for sview in view.subviews {
+            if sview is UITableView || sview is UICollectionView {
+                return
+            }
             if  sview is UILabel || sview is UIButton || sview is UITextField || sview is UITextView {
                 scaleViewFontSize(view: sview)
             } else {
@@ -123,7 +128,7 @@ public extension UIView {
 }
 
 
-public extension UIView {
+extension UIView {
     func findConstraint(layoutAttribute: NSLayoutConstraint.Attribute) -> NSLayoutConstraint? {
         if let constraints = superview?.constraints {
             for constraint in constraints where itemMatch(constraint: constraint, layoutAttribute: layoutAttribute) {
