@@ -441,19 +441,21 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
     
     [self addChildViewController:self.centerViewController];
     CGRect frame = self.childControllerContainerView.frame;
-    frame.size.height = screenHeight + 85.0f * deviceScale;
+    frame.size.height = screenHeight;
+    frame.size.width = screenWidth;
     [self.centerViewController.view setFrame:frame];
     [self.centerContainerView addSubview:self.centerViewController.view];
     [self.childControllerContainerView bringSubviewToFront:self.centerContainerView];
-    //    [self.centerViewController.view setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin];
-    //
+    [self.centerViewController.view setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin];
+    
     if (@available(iOS 13, *)) {
         self.centerViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
         
-        [self.centerViewController.view.widthAnchor constraintEqualToConstant:self.childControllerContainerView.bounds.size.width].active = YES;
-        [self.centerViewController.view.heightAnchor constraintEqualToConstant:self.childControllerContainerView.bounds.size.height].active = YES;
-        [self.centerViewController.view.centerXAnchor constraintEqualToAnchor:self.childControllerContainerView.centerXAnchor].active = YES;
-        [self.centerViewController.view.topAnchor constraintEqualToAnchor:self.childControllerContainerView.safeAreaLayoutGuide.topAnchor constant:0].active = YES;
+        [self.centerViewController.view.topAnchor constraintEqualToAnchor:self.childControllerContainerView.topAnchor].active = YES;
+        [self.centerViewController.view.bottomAnchor constraintEqualToAnchor:self.childControllerContainerView.bottomAnchor].active = YES;
+        [self.centerViewController.view.leadingAnchor constraintEqualToAnchor:self.childControllerContainerView.leadingAnchor].active = YES;
+        [self.centerViewController.view.trailingAnchor constraintEqualToAnchor:self.childControllerContainerView.trailingAnchor].active = YES;
+        
     }
     [self updateShadowForCenterView];
     
@@ -925,10 +927,10 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
             [self.view addSubview:_childControllerContainerView];
             
             _childControllerContainerView.translatesAutoresizingMaskIntoConstraints = NO;
-            [_childControllerContainerView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor].active = YES;
-            [_childControllerContainerView.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor].active = YES;
-            [_childControllerContainerView.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor].active = YES;
-            [_childControllerContainerView.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor].active = YES;
+            [_childControllerContainerView.topAnchor constraintEqualToAnchor:self.view.topAnchor].active = YES;
+            [_childControllerContainerView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
+            [_childControllerContainerView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = YES;
+            [_childControllerContainerView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
             
             
         }
