@@ -1,14 +1,12 @@
 //
 //  UIView+Convenience.swift
-//  Dasaran
 //
-//  Created by Sargis Gevorgyan on 9/25/19.
 //  Copyright © 2019 MagicDevs. All rights reserved.
 //
 
 import UIKit
 
-extension UIView {
+public extension UIView {
     
     func setFrameX(_ x: CGFloat) {
         var _frame = frame
@@ -128,7 +126,7 @@ extension UIView {
 }
 
 
-extension UIView {
+public extension UIView {
     func findConstraint(layoutAttribute: NSLayoutConstraint.Attribute) -> NSLayoutConstraint? {
         if let constraints = superview?.constraints {
             for constraint in constraints where itemMatch(constraint: constraint, layoutAttribute: layoutAttribute) {
