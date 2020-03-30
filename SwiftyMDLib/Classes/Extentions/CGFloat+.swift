@@ -6,9 +6,6 @@
 
 import Foundation
 
-
-
-
 public extension CGFloat {
     
     var scaled: CGFloat {

@@ -421,10 +421,13 @@ open class MDWebServiceManager {
                     }
                     switch  statusCode {
                        
-                    case 401...404, 500...506:
+                    case 401:
                         unAuthorizedHandler(response)
                         failure(NSLocalizedString("title_please_signIn", comment: ""))
                         print("Tried to Sign Out")
+                        return
+                        case 402...404, 500...506:
+                        openServerError(response)
                         return
                     default:
                         break
