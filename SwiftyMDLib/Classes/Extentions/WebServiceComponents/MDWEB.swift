@@ -428,12 +428,17 @@ open class MDWebServiceManager {
                         return
                         case 402...404, 500...506:
                         openServerError(response)
-                        return
+//                        return
                     default:
                         break
                     }
                     do {
-                        guard let value = response.result.value else {
+                        guard let value = response.result.value as? [String : Any] else {
+                            return
+                        }
+                        
+                        if let msg = value["msg"] as? String {
+                            failure(msg)
                             return
                         }
                         
