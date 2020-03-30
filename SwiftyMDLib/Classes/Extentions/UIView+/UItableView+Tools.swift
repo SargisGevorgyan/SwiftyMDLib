@@ -14,7 +14,7 @@ public protocol TableViewDelegation: UITableViewDelegate, UITableViewDataSource 
 public extension Date {
     var hourWithDatTimeIndicator: String {
         let formater = DateFormatter()
-        formater.dateFormat = "HH tt"
+        formater.dateFormat = "h a"
         let hour = formater.string(from: self)
         return hour
     }
