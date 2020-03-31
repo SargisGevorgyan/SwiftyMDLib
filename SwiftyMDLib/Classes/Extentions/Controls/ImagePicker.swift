@@ -12,7 +12,7 @@ public protocol CanPresent: class {
     func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)?)
 }
 
-protocol ImagePickerAlertControllerDelegate: CanPresent {
+public protocol ImagePickerAlertControllerDelegate: CanPresent {
     func imagePickerAlertController(_ imagePicker: ImagePickerAlertController, didSelected image: UIImage?)
 }
 
@@ -21,7 +21,7 @@ open class ImagePickerAlertController: UIViewController,  UINavigationController
     
     private var imagePicker = UIImagePickerController()
     
-    weak var delegate: ImagePickerAlertControllerDelegate?
+    open weak var delegate: ImagePickerAlertControllerDelegate?
     var isCropperRequired = true
     
     
@@ -75,6 +75,7 @@ open class ImagePickerAlertController: UIViewController,  UINavigationController
         }
         print("Selected Image Path is: \n assets-library://asset/asset.HEIC?id=E0BFE0C9-4C02-42C2-A308-3F8AF32EFAD8&ext=HEIC")
         delegate?.imagePickerAlertController(self, didSelected: image)
+        delegate?.dismiss(animated: true, completion: nil)
     }
     public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         print("Canceled Picking")
