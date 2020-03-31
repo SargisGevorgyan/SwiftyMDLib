@@ -44,21 +44,21 @@ open class MDWebServiceManager {
     static let sessionManager = Alamofire.SessionManager.default
 
     // MARK: - GET HEADERS
-    class func getHeader() -> HTTPHeaders? {
+    open class func getHeader() -> HTTPHeaders? {
         if !token.isEmpty {
             return [MDWebServiceManager.tokenHeaderKey: token]
         }
         return nil
     }
     // MARK: - GET SOCKET
-    class func getSocketHeader() -> HTTPHeaders? {
+    open class func getSocketHeader() -> HTTPHeaders? {
         if !token.isEmpty {
             return [MDWebServiceManager.tokenHeaderKey: token]
         }
         return nil
     }
     
-    class func stopAllRequests() {
+    open class func stopAllRequests() {
         sessionManager.session.getAllTasks { (tasks) in
             tasks.forEach { $0.cancel() }
         }
@@ -66,7 +66,7 @@ open class MDWebServiceManager {
     }
     
     // MARK: - GENEARL REQUEST METHOD
-    class func request<T : Codable>(_ str: String,
+    open class func request<T : Codable>(_ str: String,
                                     method: HTTPMethod,
                                     params: Data?,
                                     withHeader: Bool = true,
@@ -187,7 +187,7 @@ open class MDWebServiceManager {
     }
     
     // MARK: - GET WITH URLREQUEST
-    class func getWithUrlRequest<T : Codable>(_ method: String,
+    open class func getWithUrlRequest<T : Codable>(_ method: String,
                                               urlParams: String = "",
                                               withLoading: Bool = true,
                                               internetRequirement: InternetRequirementState,
@@ -208,7 +208,7 @@ open class MDWebServiceManager {
         })
     }
     // MARK: - GET WITH URLREQUEST WITHOUT HEADERS
-    class func getWithUrlRequestWithoutHeader<T : Codable>(_ method: String,
+   open class func getWithUrlRequestWithoutHeader<T : Codable>(_ method: String,
                                                            urlParams: String = "",
                                                            view: UIView? = nil,
                                                            color: UIColor = .white,
@@ -236,7 +236,7 @@ open class MDWebServiceManager {
     }
     
     // MARK: - PUT HEADER AND PARAMS
-    class func putRequestWithHeaderAndParams<T: Codable>(_ method: String,
+    open class func putRequestWithHeaderAndParams<T: Codable>(_ method: String,
                                                          model jsonData : Data?,
                                                          view: UIView? = nil,
                                                          color: UIColor = .white,
@@ -262,7 +262,7 @@ open class MDWebServiceManager {
     }
     
     // MARK: - POST
-    class func postRequest<T: Codable>(_ method: String,
+    open class func postRequest<T: Codable>(_ method: String,
                                        model jsonData : Data?,
                                        withHeader: Bool = true,
                                        view: UIView? = nil,
@@ -290,7 +290,7 @@ open class MDWebServiceManager {
         })
     }
     // MARK: - DELETE
-    class func deleteRequest<T: Codable>(_ method: String,
+    open class func deleteRequest<T: Codable>(_ method: String,
                                          withLoading: Bool = true,
                                          model jsonData: Data?,
                                          internetRequirement: InternetRequirementState,
@@ -433,17 +433,20 @@ open class MDWebServiceManager {
                         break
                     }
                     do {
-                        guard let value = response.result.value as? [String : Any] else {
+                        guard let value = response.result.value else {
                             return
                         }
+                        let jsonData = try JSONSerialization.data(withJSONObject: value)
                         
-                        if let msg = value["msg"] as? String {
+                        let jsonDict = (try? JSONSerialization.jsonObject(with: jsonData)) as? [String: Any]
+                        
+                        
+                        if let msg = (jsonDict)?["msg"]  as? String {
                             failure(msg)
                             return
                         }
                         
-                        let jsonData = try JSONSerialization.data(withJSONObject: value , options: .prettyPrinted)
-                     
+                        
                         let jsonDecoder = JSONDecoder()
                         let responseData = try jsonDecoder.decode(T.self, from: jsonData)
                        
