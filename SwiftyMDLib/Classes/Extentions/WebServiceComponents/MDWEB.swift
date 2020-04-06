@@ -432,21 +432,23 @@ open class MDWebServiceManager {
                     default:
                         break
                     }
+                    
+                    func resonseJsonData() ->Data? {
+                        do {
+                            guard let value = response.result.value else {
+                                return nil
+                            }
+                            let jsonData = try JSONSerialization.data(withJSONObject: value)
+                            
+                            return jsonData
+                        } catch {
+                            return nil
+                        }
+                    }
+                    guard let jsonData = resonseJsonData() else {
+                        return
+                    }
                     do {
-                        guard let value = response.result.value else {
-                            return
-                        }
-                        let jsonData = try JSONSerialization.data(withJSONObject: value)
-                        
-                        let jsonDict = (try? JSONSerialization.jsonObject(with: jsonData)) as? [String: Any]
-                        
-                        
-                        if let msg = (jsonDict)?["msg"]  as? String {
-                            failure(msg)
-                            return
-                        }
-                        
-                        
                         let jsonDecoder = JSONDecoder()
                         let responseData = try jsonDecoder.decode(T.self, from: jsonData)
                        
@@ -454,8 +456,22 @@ open class MDWebServiceManager {
                     } catch {
                         print(error)
                         openServerError(response)
-                        failure("")
+                        
+                        do {
+                            let jsonDict = (try? JSONSerialization.jsonObject(with: jsonData)) as? [String: Any]
+                            
+                            if let msg = (jsonDict)?["msg"]  as? String {
+                                failure(msg)
+                                return
+                            }
+                        } catch {
+                            print(error)
+                            failure("")
+                        }
                     }
+                    
+                    
+                    
                     if let err = response.error {
                         openServerError(response)
                         failure(err.localizedDescription)
