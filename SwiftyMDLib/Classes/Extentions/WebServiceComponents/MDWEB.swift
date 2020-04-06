@@ -3,7 +3,7 @@ import UIKit
 import Alamofire
 
 // MARK: - FILETYPE
-enum FileType:String , Codable {
+public enum FileType:String , Codable {
     case photo = ".jpg"
     case video = ".mov"
     case audio = ".m4a"
@@ -24,9 +24,15 @@ enum FileType:String , Codable {
 }
 
 public struct File: Codable {
-    var type: FileType
-    var data: Data
-    var name: String?
+    public var type: FileType
+    public var data: Data
+    public  var name: String?
+    
+    public init (type: FileType, data: Data, name: String?) {
+        self.type = type
+        self.data = data
+        self.name = name
+    }
 }
 
 
