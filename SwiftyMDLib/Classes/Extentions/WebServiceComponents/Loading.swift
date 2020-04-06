@@ -19,7 +19,7 @@ open class Loading {
     private static var animationView: AnimationView? = AnimationView()
     
     
-    class func showLoading(_ view: UIView, _ indicatorColor: UIColor, _ backColor: UIColor = .clear) {
+    open class func showLoading(_ view: UIView, _ indicatorColor: UIColor, _ backColor: UIColor = .clear) {
         if !canShowLoader {
             return
         }
@@ -52,7 +52,7 @@ open class Loading {
         }
     }
     
-    class func hideLoading() {
+    open class func hideLoading() {
         //        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
         self.activityIndicator.stopAnimating()
         self.animationView?.stop()
@@ -65,7 +65,7 @@ open class Loading {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
-    class func showLoadingOnWindow(_ indicatorColor: UIColor = UIColor.red, _ backColor: UIColor = .clear) {
+    open class func showLoadingOnWindow(_ indicatorColor: UIColor = UIColor.red, _ backColor: UIColor = .clear) {
         var window = UIApplication.shared.keyWindow
         if (window == nil) {
             window = UIApplication.shared.windows[0]
@@ -75,7 +75,7 @@ open class Loading {
     }
     
     
-    class func hideLoadingOnWindow() {
+    open class func hideLoadingOnWindow() {
         var window = UIApplication.shared.keyWindow
         if (window == nil) {
             window = UIApplication.shared.windows[0]
@@ -84,7 +84,7 @@ open class Loading {
         
     }
     
-    class func showToast(withText: String) {
+    open class func showToast(withText: String) {
         var window = UIApplication.shared.keyWindow
         if (window == nil) {
             window = UIApplication.shared.windows[0]
@@ -93,7 +93,7 @@ open class Loading {
         baseView!.makeToast(withText, duration: 3.0, position: .bottom)
     }
     
-    class func showCustomLoading(_ view: UIView) {
+    open class func showCustomLoading(_ view: UIView) {
         let loadingViewx = UIView(frame: CGRect(x: 0.0, y: 0.0, width: view.frame.size.width, height: view.frame.size.height))
         loadingViewx.frame = view.frame
         loadingViewx.backgroundColor = .clear
