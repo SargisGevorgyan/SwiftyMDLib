@@ -464,8 +464,6 @@ open class MDWebServiceManager {
                                 failure(msg)
                                 return
                             }
-                        } catch {
-                            print(error)
                             failure("")
                         }
                     }
