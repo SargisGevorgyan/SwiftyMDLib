@@ -24,8 +24,9 @@ open class ImagePickerAlertController: UIViewController,  UINavigationController
     open weak var delegate: ImagePickerAlertControllerDelegate?
     var isCropperRequired = true
     
+    var deleteImageAction: (()->())?
     
-    open func openAlert() {
+    open func openAlert(isDeleteRequired: Bool = false) {
         let alert = UIAlertController(title: "Choose Source", message: nil, preferredStyle: .actionSheet)
         let openGalleryAction = UIAlertAction(title: "Gallery", style: .default) { (_) in
             print("Gallery Open")
@@ -33,6 +34,14 @@ open class ImagePickerAlertController: UIViewController,  UINavigationController
         }
         let openCameraAction = UIAlertAction(title: "Camera", style: .default) { (_) in
             self.openCamera()
+        }
+        
+        let deleteActin = UIAlertAction(title: "title_delete_photo".localize(), style: .destructive) { (_) in
+            self.deleteImageAction?()
+        }
+        
+        if isDeleteRequired {
+            alert.addAction(deleteActin)
         }
         
         alert.addAction(openCameraAction)
