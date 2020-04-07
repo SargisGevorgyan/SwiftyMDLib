@@ -4,8 +4,8 @@
 //  Copyright © 2019 MagicDevs. All rights reserved.
 //
 
-import UIKit
 import AVFoundation
+import UIKit
 
 public protocol CanPresent: class {
     func dismiss(animated: Bool, completion: (() -> Void)?)
@@ -16,50 +16,46 @@ public protocol ImagePickerAlertControllerDelegate: CanPresent {
     func imagePickerAlertController(_ imagePicker: ImagePickerAlertController, didSelected image: UIImage?)
 }
 
-
-open class ImagePickerAlertController: UIViewController,  UINavigationControllerDelegate, UIImagePickerControllerDelegate, CanPresent {
-    
+open class ImagePickerAlertController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CanPresent {
     private var imagePicker = UIImagePickerController()
-    
+
     open weak var delegate: ImagePickerAlertControllerDelegate?
     var isCropperRequired = true
-    
-    var deleteImageAction: (()->())?
-    
+
+    open var deleteImageAction: (() -> Void)?
+
     open func openAlert(isDeleteRequired: Bool = false) {
         let alert = UIAlertController(title: "Choose Source", message: nil, preferredStyle: .actionSheet)
-        let openGalleryAction = UIAlertAction(title: "Gallery", style: .default) { (_) in
+        let openGalleryAction = UIAlertAction(title: "Gallery", style: .default) { _ in
             print("Gallery Open")
             self.openGallery()
         }
-        let openCameraAction = UIAlertAction(title: "Camera", style: .default) { (_) in
+        let openCameraAction = UIAlertAction(title: "Camera", style: .default) { _ in
             self.openCamera()
         }
-        
-        let deleteActin = UIAlertAction(title: "title_delete_photo".localize(), style: .destructive) { (_) in
+
+        let deleteActin = UIAlertAction(title: "title_delete_photo".localize(), style: .destructive) { _ in
             self.deleteImageAction?()
         }
-        
-        if isDeleteRequired {
-            alert.addAction(deleteActin)
-        }
-        
+
         alert.addAction(openCameraAction)
         alert.addAction(openGalleryAction)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        
+        if isDeleteRequired {
+            alert.addAction(deleteActin)
+        }
         delegate?.present(alert, animated: true, completion: nil)
     }
-    
+
     private func openGallery() {
-        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
+        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) {
             imagePicker.delegate = self
             imagePicker.sourceType = .photoLibrary
             imagePicker.allowsEditing = isCropperRequired
             delegate?.present(imagePicker, animated: true, completion: nil)
         }
     }
-    
+
     private func openCamera() {
         imagePicker.delegate = self
         imagePicker.sourceType = .camera
@@ -68,16 +64,15 @@ open class ImagePickerAlertController: UIViewController,  UINavigationController
         imagePicker.allowsEditing = isCropperRequired
         imagePicker.setEditing(true, animated: true)
         PermissionManager.permissionForCamera(delegate ?? self, picker: imagePicker)
-        
     }
-    
-    private func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!){
+
+    private func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!) {
         print("Image Picked")
         delegate?.imagePickerAlertController(self, didSelected: image)
         delegate?.dismiss(animated: true, completion: nil)
     }
-    
-    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         var image = info[.originalImage] as? UIImage
         if let editedImage = info[.editedImage] as? UIImage {
             image = editedImage
@@ -86,6 +81,7 @@ open class ImagePickerAlertController: UIViewController,  UINavigationController
         delegate?.imagePickerAlertController(self, didSelected: image)
         delegate?.dismiss(animated: true, completion: nil)
     }
+
     public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         print("Canceled Picking")
         delegate?.dismiss(animated: true, completion: nil)
