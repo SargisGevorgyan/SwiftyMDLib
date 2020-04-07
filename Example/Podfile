@@ -4,6 +4,7 @@ target 'SwiftyMDLib_Example' do
   pod 'SwiftyMDLib', :path => '../'
   pod 'lottie-ios'
   pod 'Alamofire','4.9.1'
+  pod 'SDWebImage'
 
   target 'SwiftyMDLib_Tests' do
     inherit! :search_paths
