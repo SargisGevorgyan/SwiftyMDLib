@@ -1,6 +1,6 @@
 //
 //  StoredModel+CoreDataProperties.swift
-//  
+//
 //
 //  Created by Sargis Gevorgyan on 3/10/20.
 //
@@ -18,5 +18,5 @@ extension StoredModel {
 
     @NSManaged public var data: Data?
     @NSManaged public var key: String?
-
+    @NSManaged public var isKeepingPermonantly: Bool
 }
