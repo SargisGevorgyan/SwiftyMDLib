@@ -89,19 +89,19 @@ open class CodableManager {
     }
     
     open func eraseDB() {
-        let context = persistentController.viewContext
-        let request: NSFetchRequest<StoredModel> = StoredModel.fetchRequest()
-        
-        let data = try? context.fetch(request)
-        
-        for item in data ?? [] {
-            if !(item.isKeepingPermonantly) {
-                item.data = nil
+            let context = persistentController.viewContext
+            let request: NSFetchRequest<StoredModel> = StoredModel.fetchRequest()
+            
+            let data = try? context.fetch(request)
+            
+            for item in data ?? [] {
+                if !(item.isKeepingPermonantly) {
+                    context.delete(item)
+                }
             }
+            persistentController.saveContext(context)
+    //        persistentController.eraseEntity(.storedModel)
         }
-        persistentController.saveViewContext()
-//        persistentController.eraseEntity(.storedModel)
-    }
     
     
     open func getKeyFor(_ key: String) -> String {
