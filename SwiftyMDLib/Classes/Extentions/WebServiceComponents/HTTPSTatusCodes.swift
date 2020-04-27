@@ -8,10 +8,10 @@
 
 import Foundation
 
-enum HTTPStatusCode: Int, Error, Codable {
+public enum HTTPStatusCode: Int, Error, Codable {
     
     /// The response class representation of status codes, these get grouped by their first digit.
-    enum ResponseType: Int, Codable {
+  public enum ResponseType: Int, Codable {
         
         /// - informational: This class of status code indicates a provisional response, consisting only of the Status-Line and optional headers, and is terminated by an empty line.
         case informational
@@ -252,7 +252,7 @@ enum HTTPStatusCode: Int, Error, Codable {
     case networkAuthenticationRequired = 511
     
     /// The class (or group) which the status code belongs to.
-    var responseType: ResponseType {
+    public var responseType: ResponseType {
         
         switch self.rawValue {
             
@@ -279,7 +279,7 @@ enum HTTPStatusCode: Int, Error, Codable {
     }
 }
 
-extension HTTPURLResponse {
+public extension HTTPURLResponse {
     
     var status: HTTPStatusCode? {
         return HTTPStatusCode(rawValue: statusCode)
