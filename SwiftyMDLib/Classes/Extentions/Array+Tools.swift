@@ -25,3 +25,19 @@ public extension Array where Element: Hashable {
         return buffer
     }
 }
+
+public extension Array where Element: Encodable {
+    var jsonString: String {
+        if let jsonData =  try? JSONEncoder().encode(self) {
+            
+            let string = String(data: jsonData, encoding: .utf8)
+            return string ?? ""
+        }
+        
+        return ""
+    }
+}
+
+public extension Sequence where Element: AdditiveArithmetic {
+    func sum() -> Element { reduce(.zero, +) }
+}
