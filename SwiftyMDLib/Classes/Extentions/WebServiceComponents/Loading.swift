@@ -1,8 +1,6 @@
 //
 //  Loading.swift
-//  LatinCamp
 //
-//  Created by Davit Ghushchyan on 7/9/19.
 //  Copyright © 2019 MagicDevs. All rights reserved.
 //
 
@@ -11,15 +9,20 @@ import Lottie
 import UIKit
 
 open class Loading {
+    public static var animation: Animation?
+    public static var animationSize: CGSize = .init(width: 100.scaled, height: 100.scaled)
+    public static var font = UIFont.systemFont(ofSize: 14)
+    public static var fontColor = UIColor.white
     static var canShowLoader = true
     private static var loadingView : UIView!
     private static var container = UIView()
     private static var activityIndicator = UIActivityIndicatorView()
     private static var imageIndicator = UIView()
     private static var animationView: AnimationView? = AnimationView()
+    private static var loadingText: UILabel?
     
     
-    open class func showLoading(_ view: UIView, _ indicatorColor: UIColor, _ backColor: UIColor = .clear) {
+    open class func showLoading(_ view: UIView, _ indicatorColor: UIColor, _ backColor: UIColor = UIColor(displayP3Red: 34/255, green: 34/255, blue: 34/255, alpha: 0.8), text: String? = "Please wait...") {
         if !canShowLoader {
             return
         }
@@ -33,35 +36,71 @@ open class Loading {
         loadingView.backgroundColor = backColor
         view.addSubview(loadingView)
         view.bringSubviewToFront(loadingView)
-        //        loadingView.center = view.center
         
-        container = UIView(frame: CGRect(x: 0, y: 0, width: loadingView.frame.width, height: loadingView.frame.height))
+        container = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height))
         container.backgroundColor = backColor
         container.clipsToBounds = true
         loadingView.addSubview(container)
-        //        container.center = loadingView.center
         
         activityIndicator = UIActivityIndicatorView.init(style: .white)
-        
-        activityIndicator.color = indicatorColor
-        activityIndicator.startAnimating()
-        activityIndicator.center = container.center
-        DispatchQueue.main.async {
-            container.addSubview(activityIndicator)
-            UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        if let animation = animation {
+            animationView = AnimationView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height))
+            animationView?.loopMode = .loop
+            animationView?.animation = animation
+            container.addSubview(animationView!)
+            animationView?.mdLayout.setWidth(type: .equal(constant: animationSize.width))
+            animationView?.mdLayout.setHeight(type: .equal(constant: animationSize.height))
+            animationView?.mdLayout.setCenterX(anchor: container.centerXAnchor, type: .equal(constant: 0))
+            animationView?.mdLayout.setCenterY(anchor: container.centerYAnchor, type: .equal(constant: 0))
+            animationView?.play()
+            if let text = text {
+                addLabelUnder(animationView!, withTextt: text)
+            }
+        } else {
+            activityIndicator.color = indicatorColor
+            activityIndicator.startAnimating()
+            activityIndicator.center = container.center
+            if let text = text {
+                activityIndicator.clipsToBounds = false
+                addLabelUnder(activityIndicator, withTextt: text)
+            }
+            DispatchQueue.main.async {
+                container.addSubview(activityIndicator)
+            }
         }
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
     
+    static func addLabelUnder(_ view:UIView, withTextt text: String) {
+        loadingText = UILabel()
+        guard  let label = loadingText else {
+            return
+        }
+        label.font = font
+        label.text = text
+        label.textColor = fontColor
+        view.addSubview(label)
+        view.clipsToBounds = false
+        view.superview?.clipsToBounds = false
+        label.mdLayout.setCenterX(anchor: view.centerXAnchor, type: .equal(constant: 0))
+        label.mdLayout.setCenterY(anchor: view.centerYAnchor, type: .equal(constant: 60.scaled ))
+        
+//        label.mdLayout.setTop(anchor: view.bottomAnchor, type: .equal(constant: 15))
+        
+        
+    }
+    
+    
     open class func hideLoading() {
-        //        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
         self.activityIndicator.stopAnimating()
         self.animationView?.stop()
-        
+        self.loadingText?.removeFromSuperview()
+        self.loadingText = nil
         if self.loadingView != nil {
-            self.loadingView.removeFromSuperview()
+            self.animationView?.removeFromSuperview()
+            self.loadingView?.removeFromSuperview()
             self.loadingView = nil
         }
-        //        }
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
@@ -112,3 +151,4 @@ open class Loading {
         }
     }
 }
+
