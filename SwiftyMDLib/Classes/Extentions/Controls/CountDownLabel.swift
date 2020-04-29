@@ -6,14 +6,14 @@
 
 import UIKit
 
-class CountDownLabel: UILabel {
+public class CountDownLabel: UILabel {
     private static let countDownLastTime = "CountDownLastTime"
     let countdown = CountDown()
     
     var btnSendAgain:UIButton?
     var seconds = 120
     
-    override func awakeFromNib() {
+    public override func awakeFromNib() {
         super.awakeFromNib()
         
         countdown.delegate = self
@@ -77,13 +77,13 @@ class CountDownLabel: UILabel {
 }
 
 extension CountDownLabel: CountDownDelegate {
-    func countDownDidStop() {
+    public func countDownDidStop() {
         btnSendAgain?.isEnabled = true
         btnSendAgain?.alpha = 1
         removeObservers()
     }
     
-    func countDownDidChange(_ countdown: CountDown, min: String, sec: String) {
+    public func countDownDidChange(_ countdown: CountDown, min: String, sec: String) {
         text = "\(min):\(sec)"
     }
     
