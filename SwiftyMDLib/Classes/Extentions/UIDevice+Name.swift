@@ -150,6 +150,9 @@ public extension UIDevice {
         return screenSize.height == 568
     }
     
+    static var isIphoneX: Bool {
+        return screenSize.height >= 812 && !isIpad
+    }
 }
 
 // MARK: - DEVICES
