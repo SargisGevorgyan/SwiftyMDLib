@@ -1,9 +1,7 @@
 //
 //  StopWatch.swift
-//  PersonalLawyer
 //
-//  Created by Davit Ghushchyan on 9/5/19.
-//  Copyright © 2019 MagicDevs. All rights reserved.
+//  Copyright © 2020 MagicDevs. All rights reserved.
 //
 
 import Foundation
@@ -65,12 +63,12 @@ public protocol CountDownDelegate: class {
 
 
 public final class CountDown {
-    var count = 300
-    var delegate: CountDownDelegate?
+    public var count = 300
+    public var delegate: CountDownDelegate?
     
     private var timer = Timer()
     
-    
+    public init() {}
     
     public func startFor(seconds interval: Int) {
         
