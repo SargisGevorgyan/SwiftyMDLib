@@ -104,7 +104,7 @@ open class Loading {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
-    open class func showLoadingOnWindow(_ indicatorColor: UIColor = UIColor.red, _ backColor: UIColor =  UIColor(displayP3Red: 34/255, green: 34/255, blue: 34/255, alpha: 0.8)) {
+    open class func showLoadingOnWindow(_ indicatorColor: UIColor = UIColor.gray, _ backColor: UIColor =  UIColor(displayP3Red: 34/255, green: 34/255, blue: 34/255, alpha: 0.8)) {
         var window = UIApplication.shared.keyWindow
         if (window == nil) {
             window = UIApplication.shared.windows[0]
