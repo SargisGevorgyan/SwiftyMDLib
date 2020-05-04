@@ -109,8 +109,19 @@ open class Loading {
         if (window == nil) {
             window = UIApplication.shared.windows.first
         }
-        let baseView = window?.subviews.last
-        Loading.showLoading(baseView!, indicatorColor, backColor)
+        if let baseView = window?.subviews.last {
+            Loading.showLoading(baseView, indicatorColor, backColor)
+        } else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                var window = UIApplication.shared.keyWindow
+                if (window == nil) {
+                    window = UIApplication.shared.windows.first
+                }
+                if let baseView = window?.subviews.last {
+                    Loading.showLoading(baseView, indicatorColor, backColor)
+                }
+            }
+        }
     }
     
     
@@ -128,8 +139,19 @@ open class Loading {
         if (window == nil) {
             window = UIApplication.shared.windows.first
         }
-        let baseView = window?.subviews.last
-        baseView!.makeToast(withText, duration: 3.0, position: .bottom)
+        if let baseView = window?.subviews.last {
+            baseView.makeToast(withText, duration: 3.0, position: .bottom)
+        } else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                var window = UIApplication.shared.keyWindow
+                if (window == nil) {
+                    window = UIApplication.shared.windows.first
+                }
+                if let baseView = window?.subviews.last {
+                    baseView.makeToast(withText, duration: 3.0, position: .bottom)
+                }
+            }
+        }
     }
     
     open class func showCustomLoading(_ view: UIView) {
