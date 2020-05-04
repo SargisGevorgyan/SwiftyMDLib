@@ -112,7 +112,7 @@ open class Loading {
         if let baseView = window?.subviews.last {
             Loading.showLoading(baseView, indicatorColor, backColor)
         } else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            DispatchQueue.main.asyncAfter(deadline: .now()) {
                 var window = UIApplication.shared.keyWindow
                 if (window == nil) {
                     window = UIApplication.shared.windows.first
@@ -142,7 +142,7 @@ open class Loading {
         if let baseView = window?.subviews.last {
             baseView.makeToast(withText, duration: 3.0, position: .bottom)
         } else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            DispatchQueue.main.asyncAfter(deadline: .now()) {
                 var window = UIApplication.shared.keyWindow
                 if (window == nil) {
                     window = UIApplication.shared.windows.first
