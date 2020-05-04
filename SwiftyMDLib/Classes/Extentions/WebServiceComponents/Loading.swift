@@ -107,7 +107,7 @@ open class Loading {
     open class func showLoadingOnWindow(_ indicatorColor: UIColor = UIColor.gray, _ backColor: UIColor =  UIColor(displayP3Red: 34/255, green: 34/255, blue: 34/255, alpha: 0.8)) {
         var window = UIApplication.shared.keyWindow
         if (window == nil) {
-            window = UIApplication.shared.windows[0]
+            window = UIApplication.shared.windows.first
         }
         let baseView = window?.subviews.last
         Loading.showLoading(baseView!, indicatorColor, backColor)
@@ -117,7 +117,7 @@ open class Loading {
     open class func hideLoadingOnWindow() {
         var window = UIApplication.shared.keyWindow
         if (window == nil) {
-            window = UIApplication.shared.windows[0]
+            window = UIApplication.shared.windows.first
         }
         Loading.hideLoading()
         
@@ -126,7 +126,7 @@ open class Loading {
     open class func showToast(withText: String) {
         var window = UIApplication.shared.keyWindow
         if (window == nil) {
-            window = UIApplication.shared.windows[0]
+            window = UIApplication.shared.windows.first
         }
         let baseView = window?.subviews.last
         baseView!.makeToast(withText, duration: 3.0, position: .bottom)
