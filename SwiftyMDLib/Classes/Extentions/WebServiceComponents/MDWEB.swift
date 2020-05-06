@@ -478,7 +478,7 @@ open class MDWebServiceManager {
     open class func somethingWentWrongHandler(_ response: DataResponse<Any>?, _ completion: @escaping ()->()) {
        
     }
-    open static let noInternetNotification = Notification.Name(rawValue:"No internet")
+    public static let noInternetNotification = Notification.Name(rawValue:"No internet")
 }
 
 
