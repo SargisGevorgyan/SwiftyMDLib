@@ -78,6 +78,11 @@ public extension Reachability {
             !isConnectionRequiredAndTransientConnection &&
             !(isRunningOnDevice && isWWAN && !isReachableOnWWAN)
     }
+    
+    var isUnreachable: Bool {
+        return status == .unreachable
+    }
+    
     var isReachableViaWiFi: Bool {
         return isReachable && isRunningOnDevice && !isWWAN
     }
@@ -144,7 +149,7 @@ extension Notification.Name {
 }
 
 public struct Network {
-    static var reachability: Reachability?
+    public static var reachability: Reachability?
     
     public static func prepareReachability() {
         do {

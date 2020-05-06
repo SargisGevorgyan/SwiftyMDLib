@@ -115,7 +115,7 @@ open class MDWebServiceManager {
         sessionManager.request(request).validate().responseJSON { (response) in
             
             func openNoInternet()-> Bool {
-                guard (Network.reachability?.isConnectedToNetwork ?? false) else {
+                guard (Network.reachability?.isConnectedToNetwork ?? false || Network.reachability == nil) else {
                     noInternetHandler(url:str) {
                         MDWebServiceManager.request(str, method: method, params: params, encoding: encoding, headers: headers, internetRequirement: internetRequirement, success: success, failure: failure)
                     }
@@ -327,7 +327,7 @@ open class MDWebServiceManager {
         
         
         func openNoInternet()-> Bool {
-            guard (Network.reachability?.isConnectedToNetwork ?? false) else {
+            guard (Network.reachability?.isConnectedToNetwork ?? false || Network.reachability == nil) else {
                 //                failure(NSLocalizedString(ErrorType.nointernet.rawValue, comment: ""))
                 noInternetHandler(url: strURL) {
                     MDWebServiceManager.multypartRequest(strURL, params: params, isSingleObject: isSingleObject, method: method, withLoading: withLoading, view: view, color: color, files: files, fieldName: fieldName, internetRequirement: internetRequirement, success: success, failure: failure)
