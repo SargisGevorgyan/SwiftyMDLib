@@ -33,6 +33,7 @@ open class Loading {
             }
         }
         loadingView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: view.frame.size.width, height: view.frame.size.height))
+        loadingView.tag = 666
         loadingView.backgroundColor = backColor
         view.addSubview(loadingView)
         view.bringSubviewToFront(loadingView)
@@ -100,6 +101,10 @@ open class Loading {
             self.animationView?.removeFromSuperview()
             self.loadingView?.removeFromSuperview()
             self.loadingView = nil
+        } else {
+            if let view = UIApplication.shared.windows[0].subviews.first?.subviews.first(where: {$0.tag == 666}) {
+                view.removeFromSuperview()
+            }
         }
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }

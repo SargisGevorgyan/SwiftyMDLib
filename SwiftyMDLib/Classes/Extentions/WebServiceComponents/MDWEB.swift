@@ -114,34 +114,20 @@ open class MDWebServiceManager {
         
         sessionManager.request(request).validate().responseJSON { (response) in
             
-            func openNoInternet() {
+            func openNoInternet()-> Bool {
                 guard (Network.reachability?.isConnectedToNetwork ?? false) else {
-                    noInternetHandler() {
-                    
+                    noInternetHandler(url:str) {
                         MDWebServiceManager.request(str, method: method, params: params, encoding: encoding, headers: headers, internetRequirement: internetRequirement, success: success, failure: failure)
                     }
-                    return
+                    return true
                 }
+                return false
             }
             
             
             Loading.hideLoadingOnWindow()
-            switch internetRequirement {
-            case .nonessential:
-                break
-            case .required:
-                openNoInternet()
-            case .byDefault:
-                
-                let arrayOfRequiredMethods: [String] = [
-                    
-                ]
-                
-                arrayOfRequiredMethods.forEach { (item) in
-                    if item == str {
-                        openNoInternet()
-                    }
-                }
+            if openNoInternet() {
+                return
             }
             
             
@@ -338,6 +324,30 @@ open class MDWebServiceManager {
         
         print("___ Request SEnt to : \(url) at: \(Date())")
         
+        
+        
+        func openNoInternet()-> Bool {
+            guard (Network.reachability?.isConnectedToNetwork ?? false) else {
+                //                failure(NSLocalizedString(ErrorType.nointernet.rawValue, comment: ""))
+                noInternetHandler(url: strURL) {
+                    MDWebServiceManager.multypartRequest(strURL, params: params, isSingleObject: isSingleObject, method: method, withLoading: withLoading, view: view, color: color, files: files, fieldName: fieldName, internetRequirement: internetRequirement, success: success, failure: failure)
+                }
+                return true
+            }
+            return false
+        }
+        
+        func openServerError(_ response: DataResponse<Any>?) {
+            somethingWentWrongHandler(response) {
+                MDWebServiceManager.multypartRequest(strURL, params: params, isSingleObject: isSingleObject, method: method, withLoading: withLoading, view: view, color: color, files: files, fieldName: fieldName, internetRequirement: internetRequirement, success: success, failure: failure)
+            }
+        }
+        
+        if openNoInternet() {
+            return
+        }
+        
+        
         func attachMultiPartFormData(files: [File?], fieldName: String ,multipartFormData: MultipartFormData) {
             var i = 0
             for file in files {
@@ -375,41 +385,7 @@ open class MDWebServiceManager {
             attachMultiPartFormData(files: files, fieldName: fieldName, multipartFormData: multipartFormData)
             
         }, to: url, method: method, headers: getHeader()) { (result) in
-            func openNoInternet() {
-                guard (Network.reachability?.isConnectedToNetwork ?? false) else {
-                    //                failure(NSLocalizedString(ErrorType.nointernet.rawValue, comment: ""))
-                    noInternetHandler() {
-                        MDWebServiceManager.multypartRequest(strURL, params: params, isSingleObject: isSingleObject, method: method, withLoading: withLoading, view: view, color: color, files: files, fieldName: fieldName, internetRequirement: internetRequirement, success: success, failure: failure)
-                    }
-                    return
-                }
-            }
-            
-            func openServerError(_ response: DataResponse<Any>?) {
-                somethingWentWrongHandler(response) {
-                    MDWebServiceManager.multypartRequest(strURL, params: params, isSingleObject: isSingleObject, method: method, withLoading: withLoading, view: view, color: color, files: files, fieldName: fieldName, internetRequirement: internetRequirement, success: success, failure: failure)
-                }
-            }
-            
-            switch internetRequirement {
-            case .nonessential:
-                break
-            case .required:
-                openNoInternet()
-            case .byDefault:
-                
-                let arrayOfRequiredMethods: [String] = [
-                ]
-                
-                
-                arrayOfRequiredMethods.forEach { (item) in
-                    if item == strURL {
-                        openNoInternet()
-                    }
-                }
-                
-            }
-            
+          
             
             switch result {
             case .success(let upload, _,_ ):
@@ -495,13 +471,14 @@ open class MDWebServiceManager {
         
     }
     
-    open class func noInternetHandler( _ completion: @escaping ()->()) {
-
+    open class func noInternetHandler(url: String, _ completion: @escaping ()->()) {
+        NotificationCenter.default.post(name: noInternetNotification , object: ["completion": completion, "url":url])
     }
     
     open class func somethingWentWrongHandler(_ response: DataResponse<Any>?, _ completion: @escaping ()->()) {
        
     }
+    open static let noInternetNotification = Notification.Name(rawValue:"No internet")
 }
 
 

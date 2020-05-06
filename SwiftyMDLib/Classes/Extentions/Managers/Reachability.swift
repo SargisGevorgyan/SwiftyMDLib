@@ -143,10 +143,10 @@ extension Notification.Name {
     static let flagsChanged = Notification.Name("FlagsChanged")
 }
 
-struct Network {
+public struct Network {
     static var reachability: Reachability?
     
-    static func prepareReachability() {
+    public static func prepareReachability() {
         do {
             Network.reachability = try Reachability(hostname: "www.google.com")
             do {
