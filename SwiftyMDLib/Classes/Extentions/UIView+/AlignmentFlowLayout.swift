@@ -112,8 +112,8 @@ public class AlignmentFlowLayout: UICollectionViewFlowLayout {
         // Go forward to the end or the row or section items
         var index = indexPath.row
 
-        index += 1
         while index < totalInSection - 1 {
+            index += 1
             
             let next = super.layoutAttributesForItem(at: IndexPath(row: index, section: indexPath.section))?.copy() as! UICollectionViewLayoutAttributes
             
@@ -121,7 +121,6 @@ public class AlignmentFlowLayout: UICollectionViewFlowLayout {
                 break
             }
             itemsInRow.append(next)
-            index += 1
         }
         
         // Current item
@@ -132,16 +131,15 @@ public class AlignmentFlowLayout: UICollectionViewFlowLayout {
         // Go backward to the start of the row or first item
         index = indexPath.row
 
-        index -= 1
         while index > 0 {
             
+            index -= 1
             let prev = super.layoutAttributesForItem(at: IndexPath(row: index, section: indexPath.section))?.copy() as! UICollectionViewLayoutAttributes
             
             if !prev.frame.intersects(rowFrame) {
                 break
             }
             itemsInRow.append(prev)
-            index -= 1
         }
         
         // Total items width include spacings
@@ -154,7 +152,7 @@ public class AlignmentFlowLayout: UICollectionViewFlowLayout {
         // Correct sorting in row
         
         itemsInRow.sort { (obj1, obj2) -> Bool in
-            return obj1.indexPath > obj2.indexPath
+            return obj1.indexPath < obj2.indexPath
         }
         
         var rect = CGRect.zero
