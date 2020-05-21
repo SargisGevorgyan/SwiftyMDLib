@@ -154,10 +154,15 @@ open class MDWebServiceManager {
             if response.result.error != nil {
                 
                 switch response.response?.statusCode ?? 0 {
-                case 401...404, 500...506:
-                    //                    AppManager.shared.logOutRequest()
-                    failure(NSLocalizedString("title_please_signIn", comment: ""))
-                    print("Tried to Sign Out")
+                case 401:
+                                        unAuthorizedHandler(response)
+                                        failure(NSLocalizedString("title_please_signIn", comment: ""))
+                                        print("Tried to Sign Out")
+                                        return
+                                        case 402...404, 500...506:
+                                            somethingWentWrongHandler(response) {}
+                                            failure(NSLocalizedString("Sorry something went wrong, please try again", comment: ""))
+                //                        return
                 default:
                     break
                 }
