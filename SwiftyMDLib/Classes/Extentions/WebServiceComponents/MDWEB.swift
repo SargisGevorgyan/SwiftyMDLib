@@ -38,7 +38,7 @@ public struct File: Codable {
 
 
 open class MDWebServiceManager {
-   public enum InternetRequirementState {
+    public enum InternetRequirementState {
         case required
         case nonessential
         case byDefault
@@ -49,7 +49,7 @@ open class MDWebServiceManager {
     public static var endPoint = "www.google.com"
     
     static let sessionManager = Alamofire.SessionManager.default
-
+    
     // MARK: - GET HEADERS
     open class func getHeader() -> HTTPHeaders? {
         if !token.isEmpty {
@@ -74,17 +74,17 @@ open class MDWebServiceManager {
     
     // MARK: - GENEARL REQUEST METHOD
     open class func request<T : Codable>(_ str: String,
-                                    method: HTTPMethod,
-                                    params: Data?,
-                                    withHeader: Bool = true,
-                                    view: UIView? = nil,
-                                    color: UIColor = .white,
-                                    withLoading: Bool = true,
-                                    encoding: ParameterEncoding,
-                                    headers: HTTPHeaders?,
-                                    internetRequirement: InternetRequirementState,
-                                    success:@escaping (T) -> Void,
-                                    failure:@escaping (String) -> Void) {
+                                         method: HTTPMethod,
+                                         params: Data?,
+                                         withHeader: Bool = true,
+                                         view: UIView? = nil,
+                                         color: UIColor = .white,
+                                         withLoading: Bool = true,
+                                         encoding: ParameterEncoding,
+                                         headers: HTTPHeaders?,
+                                         internetRequirement: InternetRequirementState,
+                                         success:@escaping (T) -> Void,
+                                         failure:@escaping (String) -> Void) {
         let urlString = endPoint + str
         print(urlString + " Was Called at: \(Date().description)")
         let escapedAddress = urlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
@@ -126,7 +126,9 @@ open class MDWebServiceManager {
             }
             
             
-            Loading.hideLoadingOnWindow()
+            if withLoading {
+                Loading.hideLoadingOnWindow()
+            }
             if openNoInternet() {
                 return
             }
@@ -141,7 +143,7 @@ open class MDWebServiceManager {
                         let data = reqJSONStr?.data(using: .utf8)
                         let jsonDecoder = JSONDecoder()
                         let responseData = try jsonDecoder.decode(T.self, from: data!)
-             
+                        
                         
                         success(responseData)
                         print(responseData)
@@ -156,13 +158,13 @@ open class MDWebServiceManager {
                 
                 switch response.response?.statusCode ?? 0 {
                 case 401:
-                                        unAuthorizedHandler(response)
-                                        failure(NSLocalizedString("title_please_signIn", comment: ""))
-                                        print("Tried to Sign Out")
-                                        return
-                                        case 402...404, 500...506:
-                                            somethingWentWrongHandler(response) {}
-                                            failure(NSLocalizedString("Sorry something went wrong, please try again", comment: ""))
+                    unAuthorizedHandler(response)
+                    failure(NSLocalizedString("title_please_signIn", comment: ""))
+                    print("Tried to Sign Out")
+                    return
+                case 402...404, 500...506:
+                    somethingWentWrongHandler(response) {}
+                    failure(NSLocalizedString("Sorry something went wrong, please try again", comment: ""))
                 //                        return
                 default:
                     break
@@ -186,11 +188,11 @@ open class MDWebServiceManager {
     
     // MARK: - GET WITH URLREQUEST
     open class func getWithUrlRequest<T : Codable>(_ method: String,
-                                              urlParams: String = "",
-                                              withLoading: Bool = true,
-                                              internetRequirement: InternetRequirementState,
-                                              success:@escaping (T) -> Void,
-                                              failure:@escaping (String) -> Void) {
+                                                   urlParams: String = "",
+                                                   withLoading: Bool = true,
+                                                   internetRequirement: InternetRequirementState,
+                                                   success:@escaping (T) -> Void,
+                                                   failure:@escaping (String) -> Void) {
         let urlpath = method + urlParams
         request(urlpath,
                 method: .get,
@@ -206,14 +208,14 @@ open class MDWebServiceManager {
         })
     }
     // MARK: - GET WITH URLREQUEST WITHOUT HEADERS
-   open class func getWithUrlRequestWithoutHeader<T : Codable>(_ method: String,
-                                                           urlParams: String = "",
-                                                           view: UIView? = nil,
-                                                           color: UIColor = .white,
-                                                           withLoading: Bool = true,
-                                                           internetRequirement: InternetRequirementState,
-                                                           success:@escaping (T) -> Void,
-                                                           failure:@escaping (String) -> Void) {
+    open class func getWithUrlRequestWithoutHeader<T : Codable>(_ method: String,
+                                                                urlParams: String = "",
+                                                                view: UIView? = nil,
+                                                                color: UIColor = .white,
+                                                                withLoading: Bool = true,
+                                                                internetRequirement: InternetRequirementState,
+                                                                success:@escaping (T) -> Void,
+                                                                failure:@escaping (String) -> Void) {
         
         let urlpath = method + urlParams
         
@@ -235,13 +237,13 @@ open class MDWebServiceManager {
     
     // MARK: - PUT HEADER AND PARAMS
     open class func putRequestWithHeaderAndParams<T: Codable>(_ method: String,
-                                                         model jsonData : Data?,
-                                                         view: UIView? = nil,
-                                                         color: UIColor = .white,
-                                                         withLoading: Bool = true,
-                                                         internetRequirement: InternetRequirementState,
-                                                         success:@escaping (T) -> Void,
-                                                         failure:@escaping (String) -> Void) {
+                                                              model jsonData : Data?,
+                                                              view: UIView? = nil,
+                                                              color: UIColor = .white,
+                                                              withLoading: Bool = true,
+                                                              internetRequirement: InternetRequirementState,
+                                                              success:@escaping (T) -> Void,
+                                                              failure:@escaping (String) -> Void) {
         
         request(method,
                 method: .put,
@@ -261,14 +263,14 @@ open class MDWebServiceManager {
     
     // MARK: - POST
     open class func postRequest<T: Codable>(_ method: String,
-                                       model jsonData : Data?,
-                                       withHeader: Bool = true,
-                                       view: UIView? = nil,
-                                       color: UIColor = .white,
-                                       withLoading: Bool = true,
-                                       internetRequirement: InternetRequirementState,
-                                       success:@escaping (T) -> Void,
-                                       failure:@escaping (String) -> Void) {
+                                            model jsonData : Data?,
+                                            withHeader: Bool = true,
+                                            view: UIView? = nil,
+                                            color: UIColor = .white,
+                                            withLoading: Bool = true,
+                                            internetRequirement: InternetRequirementState,
+                                            success:@escaping (T) -> Void,
+                                            failure:@escaping (String) -> Void) {
         
         
         request(method,
@@ -289,11 +291,11 @@ open class MDWebServiceManager {
     }
     // MARK: - DELETE
     open class func deleteRequest<T: Codable>(_ method: String,
-                                         withLoading: Bool = true,
-                                         model jsonData: Data?,
-                                         internetRequirement: InternetRequirementState,
-                                         success:@escaping (T) -> Void,
-                                         failure:@escaping (String) -> Void) {
+                                              withLoading: Bool = true,
+                                              model jsonData: Data?,
+                                              internetRequirement: InternetRequirementState,
+                                              success:@escaping (T) -> Void,
+                                              failure:@escaping (String) -> Void) {
         
         
         
@@ -314,17 +316,17 @@ open class MDWebServiceManager {
     
     // MARK: - MULTYPART
     open class func multypartRequest<T: Codable> (_ strURL: String,
-                                             params: Data?,
-                                             isSingleObject: Bool = true,
-                                             method: HTTPMethod = .post,
-                                             withLoading: Bool = true,
-                                             view: UIView? = nil,
-                                             color: UIColor = .systemGray,
-                                             files: [File],
-                                             fieldName: String,
-                                             internetRequirement: InternetRequirementState = .byDefault,
-                                             success:@escaping (T) -> Void,
-                                             failure:@escaping (String) -> Void) {
+                                                  params: Data?,
+                                                  isSingleObject: Bool = true,
+                                                  method: HTTPMethod = .post,
+                                                  withLoading: Bool = true,
+                                                  view: UIView? = nil,
+                                                  color: UIColor = .systemGray,
+                                                  files: [File],
+                                                  fieldName: String,
+                                                  internetRequirement: InternetRequirementState = .byDefault,
+                                                  success:@escaping (T) -> Void,
+                                                  failure:@escaping (String) -> Void) {
         
         let url = endPoint + strURL
         
@@ -394,7 +396,7 @@ open class MDWebServiceManager {
             attachMultiPartFormData(files: files, fieldName: fieldName, multipartFormData: multipartFormData)
             
         }, to: url, method: method, headers: getHeader()) { (result) in
-          
+            
             
             switch result {
             case .success(let upload, _,_ ):
@@ -411,15 +413,15 @@ open class MDWebServiceManager {
                         openServerError(response)
                     }
                     switch  statusCode {
-                       
+                        
                     case 401:
                         unAuthorizedHandler(response)
                         failure(NSLocalizedString("title_please_signIn", comment: ""))
                         print("Tried to Sign Out")
                         return
-                        case 402...404, 500...506:
+                    case 402...404, 500...506:
                         openServerError(response)
-//                        return
+                    //                        return
                     default:
                         break
                     }
@@ -441,8 +443,11 @@ open class MDWebServiceManager {
                     }
                     do {
                         let jsonDecoder = JSONDecoder()
-                        let responseData = try jsonDecoder.decode(T.self, from: jsonData)
-                       
+                        let reqJSONStr = String(data: jsonData, encoding: .utf8)
+                        print(reqJSONStr ?? "")
+                        let data = reqJSONStr?.data(using: .utf8)
+                        let responseData = try jsonDecoder.decode(T.self, from: data!)
+                        
                         success(responseData)
                     } catch {
                         print(error)
@@ -472,7 +477,7 @@ open class MDWebServiceManager {
                 print("Error in upload: \(error.localizedDescription)")
                 failure(error.localizedDescription)
             }
-           
+            
         }
     }
     
@@ -485,7 +490,7 @@ open class MDWebServiceManager {
     }
     
     open class func somethingWentWrongHandler(_ response: DataResponse<Any>?, _ completion: @escaping ()->()) {
-       
+        
     }
     public static let noInternetNotification = Notification.Name(rawValue:"No internet")
 }
