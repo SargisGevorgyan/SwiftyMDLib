@@ -429,7 +429,7 @@ open class MDWebServiceManager {
                             guard let value = response.result.value else {
                                 return nil
                             }
-                            let jsonData = try JSONSerialization.data(withJSONObject: value)
+                            let jsonData = try JSONSerialization.data(withJSONObject: value, options: .prettyPrinted)
                             
                             return jsonData
                         } catch {
