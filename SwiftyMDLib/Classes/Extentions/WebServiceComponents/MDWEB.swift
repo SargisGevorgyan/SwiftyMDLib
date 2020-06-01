@@ -16,7 +16,7 @@ public enum FileType:String , Codable {
         case .video:
             return "video/quicktime"
         case .photo:
-            return "image/jpg"
+            return "image/jpeg"
         case .doc:
             return "application/pdf"
         }
@@ -27,6 +27,7 @@ public struct File: Codable {
     public var type: FileType
     public var data: Data
     public  var name: String?
+    public var key: String?
     
     public init (type: FileType, data: Data, name: String?) {
         self.type = type
@@ -362,7 +363,10 @@ open class MDWebServiceManager {
                         var name = file?.name ?? UUID().uuidString
                         name += file?.type.rawValue ?? ""
                         
-                        let currentName =  isSingleObject ? fieldName : "\(fieldName)[\(i)][file]"
+                        var currentName =  isSingleObject ? fieldName : "\(fieldName)[\(i)][file]"
+                        if let key = file?.key {
+                            currentName = key
+                        }
                         multipartFormData.append(data, withName: currentName, fileName: name, mimeType: file?.type.mineType() ?? "") //image/jpg ,application/pdf, audio/x-m4a,video/quicktime
                         i += 1
                     }
