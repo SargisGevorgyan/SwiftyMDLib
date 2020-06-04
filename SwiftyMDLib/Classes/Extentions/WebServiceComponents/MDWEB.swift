@@ -165,6 +165,7 @@ open class MDWebServiceManager {
                 case 402...404, 500...506:
                     somethingWentWrongHandler(response) {}
                     failure(NSLocalizedString("Sorry something went wrong, please try again", comment: ""))
+                    return
                 //                        return
                 default:
                     break
@@ -419,9 +420,10 @@ open class MDWebServiceManager {
                         failure(NSLocalizedString("title_please_signIn", comment: ""))
                         print("Tried to Sign Out")
                         return
-                    case 402...404, 500...506:
+                    case 402...499, 500...506:
                         openServerError(response)
-                    //                        return
+                    failure(NSLocalizedString("Sorry something went wrong, please try again", comment: ""))
+                        return
                     default:
                         break
                     }
