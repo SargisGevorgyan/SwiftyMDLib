@@ -48,22 +48,26 @@ open class ImagePickerAlertController: UIViewController, UINavigationControllerD
     }
 
     private func openGallery() {
-        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) {
-            imagePicker.delegate = self
-            imagePicker.sourceType = .photoLibrary
-            imagePicker.allowsEditing = isCropperRequired
-            delegate?.present(imagePicker, animated: true, completion: nil)
+        PermissionManager.requestPhotoLibraryAuthorzationStatusWithCompletionHandler {
+
+            if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) {
+                self.imagePicker.delegate = self
+                self.imagePicker.sourceType = .photoLibrary
+                self.imagePicker.allowsEditing = self.isCropperRequired
+                self.delegate?.present(self.imagePicker, animated: true, completion: nil)
+            }
         }
     }
 
     private func openCamera() {
-        imagePicker.delegate = self
-        imagePicker.sourceType = .camera
-        imagePicker.cameraFlashMode = .auto
-        imagePicker.cameraDevice = .rear
-        imagePicker.allowsEditing = isCropperRequired
-        imagePicker.setEditing(true, animated: true)
-        PermissionManager.permissionForCamera(delegate ?? self, picker: imagePicker)
+        PermissionManager.requestCameraRollAuthorzationStatus {
+            self.imagePicker.delegate = self
+            self.imagePicker.sourceType = .camera
+            self.imagePicker.cameraFlashMode = .auto
+            self.imagePicker.cameraDevice = .rear
+            self.imagePicker.allowsEditing = self.isCropperRequired
+            self.imagePicker.setEditing(true, animated: true)
+        }
     }
 
     private func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!) {
