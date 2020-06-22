@@ -58,7 +58,9 @@ open class PermissionManager {
         let status = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
         switch status {
         case .authorized:
-            completionHandler!()
+            DispatchQueue.main.async {
+                completionHandler!()
+            }
         case .notDetermined:
             AVCaptureDevice.requestAccess(for: .video) { success in
                 if success { // if request is granted (success is true)
@@ -82,7 +84,9 @@ open class PermissionManager {
         let status = PHPhotoLibrary.authorizationStatus()
         switch status {
         case .authorized:
-            completionHandler!()
+            DispatchQueue.main.async {
+                completionHandler!()
+            }
         case .notDetermined:
             PHPhotoLibrary.requestAuthorization { status in
                 self.requestPhotoLibraryAuthorzationStatusWithCompletionHandler(completionHandler: completionHandler)
@@ -97,7 +101,9 @@ open class PermissionManager {
     
     static func requestVideoRecordAuthorzationStatusWithCompletionHandler(completionHandler: (() -> Void)?) {
         requestCameraRollAuthorzationStatus {
-            
+            DispatchQueue.main.async {
+                completionHandler!()
+            }
         }
     }
     
@@ -105,7 +111,9 @@ open class PermissionManager {
         let recordPermission = AVAudioSession.sharedInstance().recordPermission
         switch recordPermission {
         case .granted:
-            completionHandler!()
+            DispatchQueue.main.async {
+                completionHandler!()
+            }
         case .undetermined:
             AVAudioSession.sharedInstance().requestRecordPermission { success in
                 self.requestMicrophoneAuthorzationStatusWithCompletionHandler(completionHandler: completionHandler)
