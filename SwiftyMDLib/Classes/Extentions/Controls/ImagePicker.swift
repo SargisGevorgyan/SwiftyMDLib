@@ -67,6 +67,7 @@ open class ImagePickerAlertController: UIViewController, UINavigationControllerD
             self.imagePicker.cameraDevice = .rear
             self.imagePicker.allowsEditing = self.isCropperRequired
             self.imagePicker.setEditing(true, animated: true)
+            self.delegate?.present(self.imagePicker, animated: true, completion: nil)
         }
     }
 
