@@ -103,7 +103,7 @@ open class MDWebServiceManager {
                                        "deviceId": UIDevice.current.identifierForVendor?.uuidString ?? "",
                                        "MobileModel": UIDevice.modelName]
         
-        UIApplication.shared.windows.first?.rootViewController?.view.endEditing(true)
+//        UIApplication.shared.windows.first?.rootViewController?.view.endEditing(true)
         
         if withLoading {
             if view == nil {
@@ -377,7 +377,7 @@ open class MDWebServiceManager {
             }
         }
         
-        UIApplication.shared.windows.first?.rootViewController?.view.endEditing(true)
+//        UIApplication.shared.windows.first?.rootViewController?.view.endEditing(true)
         
         let jsonParams  = ((try? JSONSerialization.jsonObject(with: params ?? Data(), options: .allowFragments) as? [String: Any]) as [String : Any]??)
         if withLoading {
