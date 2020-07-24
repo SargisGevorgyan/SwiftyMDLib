@@ -144,7 +144,15 @@ public extension UIDevice {
     
     // MARK:  SCREEN SCALE
     static var scale: CGFloat {
+        if landscape {
+            return UIDevice.isIpad ? 1.84*(screenSize.height / 768) : screenSize.height / 375
+        }
         return UIDevice.isIpad ? 1.84*(screenSize.width / 768) : screenSize.width / 375
+    }
+    
+    static var landscape: Bool {
+        
+        return (screenSize.width > screenSize.height)
     }
     
     // MARK:  SCREEN SIZE
@@ -157,10 +165,17 @@ public extension UIDevice {
     }
     
     static var isIphone5: Bool {
+        if landscape {
+            return screenSize.width == 568
+        }
+        
         return screenSize.height == 568
     }
     
     static var isIphoneX: Bool {
+        if landscape {
+            return screenSize.width >= 812 && !isIpad
+        }
         return screenSize.height >= 812 && !isIpad
     }
 }
@@ -187,6 +202,10 @@ public enum Devices: String {
     case iPhoneXS
     case iPhoneXSMax
     case iPhoneXR
+    case iPhone11
+    case iPhone11Pro
+    case iPhone11ProMax
+    case iPhoneSE2
     
     case IPad2
     case IPad3
@@ -239,17 +258,17 @@ public enum Devices: String {
             return .iphone4Size
         case .IPhone5, .IPhone5C, .IPhone5S, .IPhoneSE:
             return .iphone5Size
-        case .IPhone6, .IPhone6S, .IPhone7, .iPhone8:
+        case .IPhone6, .IPhone6S, .IPhone7, .iPhone8, .iPhoneSE2:
             return .iphone8Size
         case .IPhone6Plus, .IPhone6SPlus, .IPhone7Plus, .iPhone8Plus:
             return .iphonePlusSize
             
-        case .iPhoneX, .iPhoneXS:
+        case .iPhoneX, .iPhoneXS, .iPhone11Pro:
             return .iphoneXSize
             
-        case .iPhoneXSMax:
+        case .iPhoneXSMax, .iPhone11ProMax:
             return .iphoneMaxSize
-        case .iPhoneXR:
+        case .iPhoneXR, .iPhone11:
             return .iphoneXRSize
         case .IPad2, .IPad3, .IPad4 , .IPad5 , .iPad6, .IPadAir2, .IPadAir:
             return .iPad
