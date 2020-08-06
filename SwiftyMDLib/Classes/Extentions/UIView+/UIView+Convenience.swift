@@ -70,7 +70,11 @@ public extension UIView {
     
     static func resizeSubViewConstraints(deviceScale : CGFloat = UIDevice.scale, view : UIView) {
         for sview in view.subviews {
+            if sview is UISwitch {
+                continue
+            }
             resizeConstraints(deviceScale: deviceScale, view: sview)
+            
             resizeSubViewConstraints(view: sview)
             if let stack =  sview as? UIStackView {
                 stack.spacing = stack.spacing.scaled
