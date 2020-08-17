@@ -31,4 +31,13 @@ extension Bundle {
         }
         return nil
     }
+    
+    public static var appDisplayName: String {
+        if let bundleDisplayName = Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String {
+            return bundleDisplayName
+        } else if let bundleName = Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String {
+            return bundleName
+        }
+        return ""
+    }
 }
