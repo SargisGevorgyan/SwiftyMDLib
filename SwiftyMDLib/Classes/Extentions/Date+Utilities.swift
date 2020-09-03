@@ -11,6 +11,7 @@ public extension Date {
     static let D_HOUR = 3600
     static let D_DAY = 86400
     static let D_WEEK = 604800
+    static let D_MONTH = 31556926/12
     static let D_YEAR = 31556926
     static let componentFlags: Set<Calendar.Component> = [.year, .month, .day, .weekOfYear, .weekOfMonth, .hour, .minute, .second, .weekday, .weekdayOrdinal]
 
@@ -32,6 +33,26 @@ public extension Date {
     func daysBeforeDate(_ aDate:Date) ->Int {
         let ti = aDate.timeIntervalSince(self)
         return Int(ti/Double(Date.D_DAY))
+    }
+    
+    func monthsAfterDate(_ aDate:Date) ->Int {
+        let ti = self.timeIntervalSince(aDate)
+        return Int(ti/Double(Date.D_MONTH))
+    }
+    
+    func monthsBeforeDate(_ aDate:Date) ->Int {
+        let ti = aDate.timeIntervalSince(self)
+        return Int(ti/Double(Date.D_MONTH))
+    }
+    
+    func yearsAfterDate(_ aDate:Date) ->Int {
+        let ti = self.timeIntervalSince(aDate)
+        return Int(ti/Double(Date.D_YEAR))
+    }
+    
+    func yearsBeforeDate(_ aDate:Date) ->Int {
+        let ti = aDate.timeIntervalSince(self)
+        return Int(ti/Double(Date.D_YEAR))
     }
     
     func distanceInDaysToDate(_ aDate:Date) ->Int {
