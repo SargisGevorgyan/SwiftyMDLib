@@ -15,6 +15,7 @@ open class Loading {
     public static var fontColor = UIColor.white
     public static var loaderText = "Please wait..."
     public static var container = UIView()
+    public static var bgColor:UIColor = UIColor(displayP3Red: 34/255, green: 34/255, blue: 34/255, alpha: 0.8)
     static var canShowLoader = true
     private static var loadingView : UIView!
     private static var activityIndicator = UIActivityIndicatorView()
@@ -23,7 +24,7 @@ open class Loading {
     private static var loadingText: UILabel?
     
     
-    open class func showLoading(_ view: UIView, _ indicatorColor: UIColor, _ backColor: UIColor = UIColor(displayP3Red: 34/255, green: 34/255, blue: 34/255, alpha: 0.8), text: String? = loaderText) {
+    open class func showLoading(_ view: UIView, _ indicatorColor: UIColor, _ backColor: UIColor = bgColor, text: String? = loaderText) {
         if !canShowLoader {
             return
         }
@@ -110,7 +111,7 @@ open class Loading {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
-    open class func showLoadingOnWindow(_ indicatorColor: UIColor = UIColor.gray, _ backColor: UIColor =  UIColor(displayP3Red: 34/255, green: 34/255, blue: 34/255, alpha: 0.8)) {
+    open class func showLoadingOnWindow(_ indicatorColor: UIColor = UIColor.gray, _ backColor: UIColor =  bgColor) {
         var window = UIApplication.shared.keyWindow
         if (window == nil) {
             window = UIApplication.shared.windows.first
