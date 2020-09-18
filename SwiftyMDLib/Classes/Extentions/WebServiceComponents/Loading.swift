@@ -13,16 +13,17 @@ open class Loading {
     public static var animationSize: CGSize = .init(width: 100.scaled, height: 100.scaled)
     public static var font = UIFont.systemFont(ofSize: 14)
     public static var fontColor = UIColor.white
+    public static var loaderText = "Please wait..."
+    public static var container = UIView()
     static var canShowLoader = true
     private static var loadingView : UIView!
-    private static var container = UIView()
     private static var activityIndicator = UIActivityIndicatorView()
     private static var imageIndicator = UIView()
     private static var animationView: AnimationView? = AnimationView()
     private static var loadingText: UILabel?
     
     
-    open class func showLoading(_ view: UIView, _ indicatorColor: UIColor, _ backColor: UIColor = UIColor(displayP3Red: 34/255, green: 34/255, blue: 34/255, alpha: 0.8), text: String? = "Please wait...") {
+    open class func showLoading(_ view: UIView, _ indicatorColor: UIColor, _ backColor: UIColor = UIColor(displayP3Red: 34/255, green: 34/255, blue: 34/255, alpha: 0.8), text: String? = loaderText) {
         if !canShowLoader {
             return
         }
