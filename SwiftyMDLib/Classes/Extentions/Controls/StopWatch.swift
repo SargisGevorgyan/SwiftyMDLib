@@ -64,7 +64,7 @@ public protocol CountDownDelegate: class {
 
 public final class CountDown {
     public var count = 300
-    public var delegate: CountDownDelegate?
+    public weak var delegate: CountDownDelegate?
     
     private var timer = Timer()
     
