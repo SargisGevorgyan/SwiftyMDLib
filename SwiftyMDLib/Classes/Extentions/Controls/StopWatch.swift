@@ -109,10 +109,12 @@ public final class CountDown {
     }
     
     
-    public func stop() {
+    public func stop(withDelegate: Bool = true) {
         timer.invalidate()
-        delegate?.countDownDidChange(self, min: "0", sec: "00")
-        delegate?.countDownDidStop()
+        if withDelegate {
+            delegate?.countDownDidChange(self, min: "0", sec: "00")
+            delegate?.countDownDidStop()
+        }
     }
     
 }
