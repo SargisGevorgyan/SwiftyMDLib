@@ -30,7 +30,7 @@ public extension LanguageEx {
         case .english:              return "en"
         case .russian:              return "ru"
         case .armenian:             return "hy"
-        case .chinese:              return "zh"
+        case .chinese:              return "zh-Hant"
         }
     }
     
@@ -64,7 +64,7 @@ public extension LanguageEx {
         case "en":              self = .english
         case "ru":              self = .russian
         case "hy":              self = .armenian
-        case "zh":              self = .chinese
+        case "zh-Hant":         self = .chinese
         default:                self = .english
         }
     }
