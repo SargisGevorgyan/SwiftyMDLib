@@ -5,8 +5,13 @@
 //
 
 import UIKit
+
+public struct ScaleConfigurations {
+    public static var defaultConfigs = true
+}
+
 public extension UIDevice {
-    
+   
     // MARK: DEVOCE MODEL -> Devices
     static var deviceModel: Devices {
         var systemInfo = utsname()
@@ -144,10 +149,27 @@ public extension UIDevice {
     
     // MARK:  SCREEN SCALE
     static var scale: CGFloat {
-        if landscape {
-            return UIDevice.isIpad ? 1.84*(screenSize.height / 768) : screenSize.height / 375
+        if ScaleConfigurations.defaultConfigs {
+            if landscape {
+                return UIDevice.isIpad ? 1.84*(screenSize.height / 768) : screenSize.height / 375
+            }
+            return UIDevice.isIpad ? 1.84*(screenSize.width / 768) : screenSize.width / 375
+        } else {
+            if landscape {
+                return screenSize.height / 375
+            }
+            return screenSize.width / 375
         }
-        return UIDevice.isIpad ? 1.84*(screenSize.width / 768) : screenSize.width / 375
+    }
+    
+    static var iPadScale: CGFloat {
+        if isIpad {
+            if landscape {
+                return (screenSize.height / 768)
+            }
+            return (screenSize.width / 768)
+        }
+        return 1
     }
     
     static var landscape: Bool {
