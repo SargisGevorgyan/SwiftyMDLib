@@ -75,7 +75,7 @@ public extension UIView {
             }
             resizeConstraints(deviceScale: deviceScale, view: sview)
             
-            resizeSubViewConstraints(view: sview)
+            resizeSubViewConstraints(deviceScale: deviceScale, view: sview)
             if let stack =  sview as? UIStackView {
                 stack.spacing = stack.spacing.scaled
             }
