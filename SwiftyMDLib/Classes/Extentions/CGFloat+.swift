@@ -11,6 +11,10 @@ public extension CGFloat {
     var scaled: CGFloat {
         return self * UIDevice.scale
     }
+    
+    var ipadScaled: CGFloat {
+        return self * UIDevice.iPadScale
+    }
 }
 
 public extension CGRect {
@@ -32,10 +36,17 @@ public extension Int {
         return CGFloat(self).scaled
     }
     
+    var ipadScaled: CGFloat {
+        return CGFloat(self) * UIDevice.iPadScale
+    }
 }
 
 public extension Double {
     var scaled: CGFloat {
         return CGFloat(self).scaled
+    }
+    
+    var ipadScaled: CGFloat {
+        return CGFloat(self) * UIDevice.iPadScale
     }
 }
