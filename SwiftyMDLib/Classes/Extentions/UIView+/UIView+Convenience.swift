@@ -121,9 +121,9 @@ public extension UIView {
                 return
             }
             if  sview is UILabel || sview is UIButton || sview is UITextField || sview is UITextView {
-                scaleViewFontSize(view: sview)
+                scaleViewFontSize(deviceScale: deviceScale, view: sview)
             } else {
-                scaleSubViewsFontSizes(view: sview)
+                scaleSubViewsFontSizes(deviceScale: deviceScale, view: sview)
             }
         }
     }
