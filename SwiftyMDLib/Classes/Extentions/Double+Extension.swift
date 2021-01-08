@@ -35,7 +35,7 @@ public extension String {
         return formatter
     }()
     
-    private var decimalSeparator:String{
+    private var decimalSeparator:String {
         return "."
     }
     

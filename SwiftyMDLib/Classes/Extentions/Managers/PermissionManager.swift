@@ -83,7 +83,7 @@ open class PermissionManager {
     static func requestPhotoLibraryAuthorzationStatusWithCompletionHandler(completionHandler: (() -> Void)?) {
         let status = PHPhotoLibrary.authorizationStatus()
         switch status {
-        case .authorized:
+        case .authorized, .limited:
             DispatchQueue.main.async {
                 completionHandler!()
             }
