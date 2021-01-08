@@ -71,8 +71,41 @@ public extension String {
 }
 
 public extension String {
+    static let numberFormatter = NumberFormatter()
     var doubleValue: Double {
-        return (self as NSString).doubleValue
+        String.numberFormatter.decimalSeparator = "."
+        if let result =  String.numberFormatter.number(from: self) {
+            return result.doubleValue
+        } else {
+            String.numberFormatter.decimalSeparator = ","
+            if let result = String.numberFormatter.number(from: self) {
+                return result.doubleValue
+            }
+        }
+        return 0
+    }
+    
+    var isNumber: Bool {
+        String.numberFormatter.decimalSeparator = "."
+        if String.numberFormatter.number(from: self) != nil {
+            return true
+        } else {
+            String.numberFormatter.decimalSeparator = ","
+            if String.numberFormatter.number(from: self) != nil {
+                return true
+            }
+        }
+        return false
+    }
+    
+}
+
+public extension NumberFormatter {
+    static let shared = NumberFormatter()
+}
+public extension StringProtocol {
+    var doubleValue: Double? {
+        return NumberFormatter.shared.number(from: String(self))?.doubleValue
     }
 }
 
@@ -86,24 +119,24 @@ public extension String {
     var fileURL: URL {
         return URL(fileURLWithPath: self)
     }
-
+    
     func appendingPathComponent(_ string: String) -> String {
         return fileURL.appendingPathComponent(string).path
     }
-
+    
     var lastPathComponent:String {
         get {
             return fileURL.lastPathComponent
         }
     }
-
-   var deletingPathExtension: String {
-    return fileURL.deletingPathExtension().path
-   }
+    
+    var deletingPathExtension: String {
+        return fileURL.deletingPathExtension().path
+    }
 }
 
 public extension String {
-
+    
     /// Returns a string with all non-numeric characters removed
     var numericString: String {
         let characterSet = CharacterSet(charactersIn: "01234567890.").inverted
@@ -131,6 +164,6 @@ public extension String {
     }
     
     var isValidPassword: Bool {
-       return count > 7 && containAnyNumerical()
+        return count > 7 && containAnyNumerical()
     }
 }

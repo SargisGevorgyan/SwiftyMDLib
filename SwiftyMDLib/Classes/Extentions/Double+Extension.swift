@@ -36,7 +36,7 @@ public extension String {
     }()
     
     private var decimalSeparator:String{
-        return String.decimalFormatter.decimalSeparator ?? "."
+        return "."
     }
     
     func isValidDecimal(maximumFractionDigits:Int)->Bool{
@@ -47,7 +47,7 @@ public extension String {
         }
         
         // Check if valid decimal
-        if let _ = String.decimalFormatter.number(from: self){
+        if self.isNumber {
             
             // Get fraction digits part using separator
             let numberComponents = self.components(separatedBy: decimalSeparator)
