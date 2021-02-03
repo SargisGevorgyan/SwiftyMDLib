@@ -1,9 +1,11 @@
 use_frameworks!
+# ignore all warnings from all pods
+inhibit_all_warnings!
 
 target 'SwiftyMDLib_Example' do
   pod 'SwiftyMDLib', :path => '../'
   pod 'lottie-ios'
-  pod 'Alamofire','4.9.1'
+  pod 'Alamofire'
   pod 'SDWebImage'
 
   target 'SwiftyMDLib_Tests' do

@@ -2,41 +2,6 @@
 import UIKit
 import Alamofire
 
-// MARK: - FILETYPE
-public enum FileType:String , Codable {
-    case photo = ".jpg"
-    case video = ".mov"
-    case audio = ".m4a"
-    case doc = ".pdf"
-    
-    func mineType() -> String {
-        switch self {
-        case .audio:
-            return "audio/x-m4a"
-        case .video:
-            return "video/quicktime"
-        case .photo:
-            return "image/jpeg"
-        case .doc:
-            return "application/pdf"
-        }
-    }
-}
-
-public struct File: Codable {
-    public var type: FileType
-    public var data: Data
-    public  var name: String?
-    public var key: String?
-    
-    public init (type: FileType, data: Data, name: String?) {
-        self.type = type
-        self.data = data
-        self.name = name
-    }
-}
-
-
 open class MDWebServiceManager {
     public enum InternetRequirementState {
         case required
@@ -48,7 +13,7 @@ open class MDWebServiceManager {
     public static var token = String()
     public static var endPoint = "www.google.com"
     
-    static let sessionManager = Alamofire.SessionManager.default
+    static let sessionManager = Alamofire.Session.default
     
     // MARK: - GET HEADERS
     open class func getHeader() -> HTTPHeaders? {
@@ -93,8 +58,9 @@ open class MDWebServiceManager {
         request.httpMethod = method.rawValue
         request.timeoutInterval = 80
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
         if withHeader {
-            request.allHTTPHeaderFields = getHeader()
+            request.allHTTPHeaderFields = getHeader()?.dictionary
         }
         //        if let lang = LanguageManger.shared.currentLanguage?.rawValue {
         //            request.allHTTPHeaderFields = ["languageCode": lang]
@@ -133,11 +99,17 @@ open class MDWebServiceManager {
                 return
             }
             
-            
-            if response.result.isSuccess {
-                if response.result.value is [String : Any] {
+            if let x  = (response.response?.statusCode) {
+                if x > 403 {
+                    failure(String(x))
+                    return
+                }
+            }
+            switch response.result {
+            case .success(let value):
+                if value is [String : Any] {
                     do {
-                        let jsonData = try JSONSerialization.data(withJSONObject: response.result.value as! [String : Any], options: .prettyPrinted)
+                        let jsonData = try JSONSerialization.data(withJSONObject: value as! [String : Any], options: .prettyPrinted)
                         let reqJSONStr = String(data: jsonData, encoding: .utf8)
                         print(reqJSONStr ?? "")
                         let data = reqJSONStr?.data(using: .utf8)
@@ -152,10 +124,8 @@ open class MDWebServiceManager {
                         failure(error.localizedDescription)
                     }
                 }
-            }
-            
-            if response.result.error != nil {
-                
+                break
+            case .failure(_):
                 switch response.response?.statusCode ?? 0 {
                 case 401:
                     unAuthorizedHandler(response)
@@ -179,10 +149,7 @@ open class MDWebServiceManager {
                         //                        failure(ErrorType.servererror.rawValue)
                     }
                 }
-            } else if let x  = (response.response?.statusCode) {
-                if x > 403 {
-                    failure(String(x))
-                }
+                break
             }
         }
     }
@@ -346,7 +313,7 @@ open class MDWebServiceManager {
             return false
         }
         
-        func openServerError(_ response: DataResponse<Any>?) {
+        func openServerError(_ response: AFDataResponse<Any>?, error: AFError? = nil) {
             somethingWentWrongHandler(response) {
                 MDWebServiceManager.multypartRequest(strURL, params: params, isSingleObject: isSingleObject, method: method, withLoading: withLoading, view: view, color: color, files: files, fieldName: fieldName, internetRequirement: internetRequirement, success: success, failure: failure)
             }
@@ -387,8 +354,7 @@ open class MDWebServiceManager {
                 Loading.showLoading(view!, color)
             }
         }
-        
-        sessionManager.upload(multipartFormData: { (multipartFormData) in //Attach parameters
+        sessionManager.upload(multipartFormData:{ (multipartFormData) in //Attach parameters
             if let jsonParams = jsonParams {
                 for (key, value) in jsonParams ?? [:] {
                     multipartFormData.append("\(value)".data(using: String.Encoding.utf8)!, withName: key as String)
@@ -396,13 +362,9 @@ open class MDWebServiceManager {
             }
             attachMultiPartFormData(files: files, fieldName: fieldName, multipartFormData: multipartFormData)
             
-        }, to: url, method: method, headers: getHeader()) { (result) in
-            
-            
-            switch result {
-            case .success(let upload, _,_ ):
-                upload.responseJSON { response in
-                    
+        }, to: url, method: method, headers: getHeader()).responseJSON { (response) in
+            switch response.result {
+            case .success(let value):
                     if withLoading {
                         Loading.hideLoadingOnWindow()
                     }
@@ -428,11 +390,8 @@ open class MDWebServiceManager {
                         break
                     }
                     
-                    func resonseJsonData() ->Data? {
+                func resonseJsonData() ->Data? {
                         do {
-                            guard let value = response.result.value else {
-                                return nil
-                            }
                             let jsonData = try JSONSerialization.data(withJSONObject: value, options: .prettyPrinted)
                             
                             return jsonData
@@ -473,17 +432,15 @@ open class MDWebServiceManager {
                         failure(err.localizedDescription)
                         return
                     }
-                }
             case .failure(let error):
                 openServerError(nil)
                 print("Error in upload: \(error.localizedDescription)")
                 failure(error.localizedDescription)
             }
-            
         }
     }
     
-    open class func unAuthorizedHandler(_ response: DataResponse<Any>?) {
+    open class func unAuthorizedHandler(_ response: AFDataResponse<Any>?) {
         
     }
     
@@ -491,7 +448,7 @@ open class MDWebServiceManager {
         NotificationCenter.default.post(name: noInternetNotification , object: ["completion": completion, "url":url])
     }
     
-    open class func somethingWentWrongHandler(_ response: DataResponse<Any>?, _ completion: @escaping ()->()) {
+    open class func somethingWentWrongHandler(_ response: AFDataResponse<Any>?, _ completion: @escaping ()->()) {
         
     }
     public static let noInternetNotification = Notification.Name(rawValue:"No internet")
