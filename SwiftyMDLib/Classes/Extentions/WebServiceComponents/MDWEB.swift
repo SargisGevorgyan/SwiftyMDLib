@@ -298,7 +298,7 @@ open class MDWebServiceManager {
         
         let url = endPoint + strURL
         
-        print("___ Request SEnt to : \(url) at: \(Date())")
+        print("___ Request Sent to : \(url) at: \(Date())")
         
         
         

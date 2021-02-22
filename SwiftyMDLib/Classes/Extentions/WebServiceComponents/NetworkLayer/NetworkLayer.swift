@@ -34,7 +34,7 @@ public class NetworkLayer: DataRequestable {
                 return
             }
         }
-        print("___ Request SEnt to : \(endPoint.getUrl().absoluteString) at: \(Date())")
+        print("___ Request Sent to : \(endPoint.getUrl().absoluteString) at: \(Date())")
         if endPoint.isMultipart {
             multipartRequest(with: endPoint,result: result)
         } else {
@@ -83,6 +83,7 @@ public class NetworkLayer: DataRequestable {
                 } catch {
                     
                     result(.failure(.dataParsing(error: error)))
+                    print("Can't decode ", error.localizedDescription)
                 }
                 
             case .failure(let error):
