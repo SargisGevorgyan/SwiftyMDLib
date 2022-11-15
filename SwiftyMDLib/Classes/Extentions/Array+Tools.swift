@@ -17,11 +17,6 @@ public extension Array where Element: Hashable {
             }
         }
         
-//        let set = Set(self)
-//
-//        return (set as! NSSet ).allObjects as? [Element] ?? []
-        
-        
         return buffer
     }
 }
@@ -40,4 +35,52 @@ public extension Array where Element: Encodable {
 
 public extension Sequence where Element: AdditiveArithmetic {
     func sum() -> Element { reduce(.zero, +) }
+}
+
+public extension Collection {
+    /// Returns the element at the specified index if it is within bounds, otherwise nil.
+    subscript (safe index: Index) -> Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
+}
+
+public extension Array where Element: Hashable {
+    func hasAny(_ elements: [Element]) -> Bool {
+        return Set(elements).intersection(Set(self)).count > 0
+    }
+    
+    func element(before element: Element) -> Element? {
+        guard let index = self.firstIndex(of: element) else { return nil }
+        return self[safe: self.index(before: index)]
+    }
+    
+    func element(after element: Element) -> Element? {
+        guard let index = self.firstIndex(of: element) else { return nil }
+        return self[safe: self.index(after: index)]
+    }
+    func removingDuplicates() -> [Element] {
+        var addedDict = [Element: Bool]()
+        
+        return filter {
+            addedDict.updateValue(true, forKey: $0) == nil
+        }
+    }
+    
+    mutating func removeDuplicates() {
+        self = self.removingDuplicates()
+    }
+    
+    mutating func remove(_ item: Element) {
+        if let index = firstIndex(of: item) {
+            self.remove(at: index)
+        }
+    }
+}
+
+public extension Array {
+    func chunked(into size: Int) -> [[Element]] {
+        return stride(from: 0, to: count, by: size).map {
+            Array(self[$0 ..< Swift.min($0 + size, count)])
+        }
+    }
 }

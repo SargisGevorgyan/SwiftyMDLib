@@ -21,20 +21,20 @@ class ViewController: UIViewController {
         EndpointDefaultConfigs.scheme = "https"
         EndpointDefaultConfigs.host = "jsonplaceholder.typicode.com"
         MDWebServiceManager.getWithUrlRequest("/todos/1", internetRequirement: .required) { (response: Welcome)  in
-            
+            print(response)
         } failure: { (error) in
-            
+            print(error)
         }
         NetworkLayer.unAuthorizedHandler = { endpoint in
-            
+            print(endpoint)
         }
         
-        NetworkLayer.noInternetHandler = { endpint in
-            
+        NetworkLayer.noInternetHandler = { endpoint in
+            print(endpoint)
         }
         let endpoint = WelcomeEndpoint()
 
-        NetworkLayer.request(with: endpoint) { (result: Result<Welcome,WebServiceError>) in
+        NetworkLayer.request(with: endpoint) { (result: Result<Welcome, WebServiceError>) in
             switch result {
             case .success(let data):
                 print(data)
@@ -49,8 +49,7 @@ class ViewController: UIViewController {
       
         var uploadEndpoint = UploadImageEndpoint()
         let file = File(type: .photo, key: "image", data: image.pngData() ?? Data(), name: "image")
-        
-        
+
         uploadEndpoint.files = Files(key: "image", files: [file])
         uploadEndpoint.data = data
         
@@ -78,23 +77,22 @@ struct Welcome: Codable {
 }
 
 struct WelcomeEndpoint: Endpointable {
-    var files: Files? = nil
+    var files: Files?
     
-    var data: Data? = nil
+    var data: Data?
     
     var method: HTTPMethod = .get
     var path: String = "/todos/1"
 }
 
-//http://www.bluger.ch/envision/api_v2_8/add_vision_image
 struct UploadImageEndpoint: Endpointable {
-    var files: Files? = nil
+    var files: Files?
     
-    var data: Data? = nil
+    var data: Data?
     var isMultipart: Bool = true
     
     var method: HTTPMethod = .post
-    var host: String? = "www.bluger.ch"
-    var path: String = "/envision/api_v2_8/add_vision_image"
-    var additionalHeaders: HTTPHeaders = .init(["Api-Token"  : "4c809012d7a0e134c02cb1d60bd981d9"])
+    var host: String? = "www.test.com"
+    var path: String = "add_image"
+    var additionalHeaders: HTTPHeaders = .init(["Api-Token": "4c809012d7a0e134c02cb1d60bd981d9"])
 }

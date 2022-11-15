@@ -7,7 +7,7 @@
 import AVFoundation
 import UIKit
 
-public protocol CanPresent: class {
+public protocol CanPresent: AnyObject {
     func dismiss(animated: Bool, completion: (() -> Void)?)
     func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)?)
 }

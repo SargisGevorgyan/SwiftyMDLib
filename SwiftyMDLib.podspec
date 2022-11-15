@@ -2,13 +2,13 @@ Pod::Spec.new do |s|
 
 # 1
 s.platform = :ios
-s.ios.deployment_target = '11.0'
+s.ios.deployment_target = '13.0'
 s.name = "SwiftyMDLib"
 s.summary = "SwiftyMDLib MagicDevs Common Lib."
 s.requires_arc = true
 
 # 2
-s.version = "1.0.1"
+s.version = "1.1.0"
 
 # 3
 s.license = { :type => "MIT", :file => "LICENSE" }
@@ -51,5 +51,6 @@ s.resources = "SwiftyMDLib/Resources/**/*.{otf,xcdatamodeld,xcassets}"
 s.swift_version = "5.0"
 
 end
-# cd /Users/sargisgevorgian/Documents/Libraries/SwiftyMDLib 
+
+# cd /Users/sargisgevorgyan/Documents/Projects/SwiftyMDLib
 # pod trunk push

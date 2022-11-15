@@ -29,3 +29,15 @@ public extension UITableView {
         }
     }
 }
+
+public extension UITableView {
+    public func removeHeaderFooter() {
+        // Remove space between sections.
+        sectionHeaderHeight = 0
+        sectionFooterHeight = 0
+
+        // Remove space at top and bottom of tableView.
+        tableHeaderView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 0, height: CGFloat.leastNormalMagnitude)))
+        tableFooterView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 0, height: CGFloat.leastNormalMagnitude)))
+    }
+}

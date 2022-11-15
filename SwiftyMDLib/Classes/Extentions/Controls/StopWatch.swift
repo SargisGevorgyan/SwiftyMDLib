@@ -6,7 +6,7 @@
 
 import Foundation
 
-public protocol StopWatchDelegate: class {
+public protocol StopWatchDelegate: AnyObject {
     func stopWatch(_ stopWatch: StopWatch, min: String, sec: String, fra: String)
 }
 
@@ -56,7 +56,7 @@ public final class StopWatch {
     
 }
 
-public protocol CountDownDelegate: class {
+public protocol CountDownDelegate: AnyObject {
     func countDownDidChange(_ countdown: CountDown, min: String, sec: String)
     func countDownDidStop()
 }

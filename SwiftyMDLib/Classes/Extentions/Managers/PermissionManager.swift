@@ -35,8 +35,6 @@ open class PermissionManager {
         
     }
     
-    
-    
     static func openSettings(_ isForCamera : Bool! = true) {
         DispatchQueue.main.async {
             let message: String = Bundle.main.object(forInfoDictionaryKey: (isForCamera ?  "NSCameraUsageDescription" : "NSPhotoLibraryUsageDescription")) as! String

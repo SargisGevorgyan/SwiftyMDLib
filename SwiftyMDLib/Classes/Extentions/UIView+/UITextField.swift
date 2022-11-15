@@ -51,3 +51,10 @@ public extension UITextField {
         clearsOnBeginEditing = false
     }
 }
+
+public extension UITextField {
+    func setCursor(position: Int) {
+        let position = self.position(from: beginningOfDocument, offset: position)!
+        selectedTextRange = textRange(from: position, to: position)
+    }
+}

@@ -7,6 +7,7 @@ target 'SwiftyMDLib_Example' do
   pod 'lottie-ios'
   pod 'Alamofire'
   pod 'SDWebImage'
+  pod 'SwiftLint', '0.40.3'
 
   target 'SwiftyMDLib_Tests' do
     inherit! :search_paths
