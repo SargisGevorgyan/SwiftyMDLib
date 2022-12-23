@@ -9,7 +9,7 @@ import Lottie
 import UIKit
 
 open class Loading {
-    public static var animation: Animation?
+    public static var animation: LottieAnimation?
     public static var animationSize: CGSize = .init(width: 100.scaled, height: 100.scaled)
     public static var font = UIFont.systemFont(ofSize: 14)
     public static var fontColor = UIColor.white
@@ -20,7 +20,7 @@ open class Loading {
     private static var loadingView : UIView!
     private static var activityIndicator = UIActivityIndicatorView()
     private static var imageIndicator = UIView()
-    private static var animationView: AnimationView? = AnimationView()
+    private static var animationView: LottieAnimationView? = LottieAnimationView()
     private static var loadingText: UILabel?
     
     
@@ -47,7 +47,7 @@ open class Loading {
         
         activityIndicator = UIActivityIndicatorView.init(style: .white)
         if let animation = animation {
-            animationView = AnimationView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height))
+            animationView = LottieAnimationView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height))
             animationView?.loopMode = .loop
             animationView?.animation = animation
             container.addSubview(animationView!)
