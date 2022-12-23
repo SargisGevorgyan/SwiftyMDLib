@@ -118,12 +118,12 @@ public class NetworkLayer: DataRequestable {
                 if fileSize != 0 {
                     let data = file.data
                     var name = file.name ?? UUID().uuidString
-                    name += file.type.rawValue
+                    name += file.type.ext
                     var currentName =  isSingleObject ? file.key : "\(files!.key)[\(i)]"
                     if let key = file.key {
                         currentName = key
                     }
-                    multipartFormData.append(data, withName: currentName ?? "", fileName: name, mimeType: file.type.mineType()) //image/jpg ,application/pdf, audio/x-m4a,video/quicktime
+                    multipartFormData.append(data, withName: currentName ?? "", fileName: name, mimeType: file.type.mimeType()) //image/jpg ,application/pdf, audio/x-m4a,video/quicktime
                     i += 1
                 }
             }

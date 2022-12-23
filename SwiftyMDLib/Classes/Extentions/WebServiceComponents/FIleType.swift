@@ -7,18 +7,48 @@
 
 import Foundation
 
-public enum FileType:String , Codable {
-    case photo = ".jpg"
-    case video = ".mov"
-    case audio = ".m4a"
-    case doc = ".pdf"
+public enum FileType: Codable {
+
+    public enum Video: String, Codable {
+        case quickTime = ".mov"
+        case mpeg4 = ".mp4"
+        case avInterleave = ".avi"
+
+        func mimeType() -> String {
+            switch self {
+            case .quickTime:
+                return "video/quicktime"
+            case .mpeg4:
+                return "video/mp4"
+            case .avInterleave:
+                return "video/x-msvideo"
+            }
+        }
+    }
+    case photo
+    case video(Video)
+    case audio
+    case doc
+
+    var ext: String {
+        switch self {
+        case .photo:
+            return ".jpg"
+        case .video(let type):
+            return type.rawValue
+        case .audio:
+            return ".m4a"
+        case .doc:
+            return ".pdf"
+        }
+    }
     
-    func mineType() -> String {
+    func mimeType() -> String {
         switch self {
         case .audio:
             return "audio/x-m4a"
-        case .video:
-            return "video/quicktime"
+        case .video(let type):
+            return type.mimeType()
         case .photo:
             return "image/jpeg"
         case .doc:
