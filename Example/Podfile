@@ -6,7 +6,7 @@ target 'SwiftyMDLib_Example' do
   pod 'SwiftyMDLib', :path => '../'
   pod 'lottie-ios'
   pod 'Alamofire'
-  pod 'SDWebImage', 'SDWebImage 5.15.2'
+  pod 'SDWebImage', '5.15.2'
   pod 'SwiftLint', '0.40.3'
 
   target 'SwiftyMDLib_Tests' do
