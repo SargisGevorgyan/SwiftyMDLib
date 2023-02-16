@@ -39,7 +39,24 @@ public extension UIView {
         let rotation = self.transform.rotated(by: radians)
         self.transform = rotation
     }
-    
-    
-    
+}
+
+public extension UIView {
+    static var nib: UINib {
+        return UINib(nibName: self.id, bundle: nil)
+    }
+
+    func addDropShadow(ofColor color: UIColor = UIColor(white: 0, alpha: 1),
+                       radius: CGFloat = 10,
+                       offset: CGSize = CGSize(width: 0, height: 4),
+                       opacity: Float = 0.37) {
+        layer.shadowColor = color.cgColor
+        layer.shadowOffset = offset
+        layer.shadowRadius = radius
+        layer.shadowOpacity = opacity
+        layer.masksToBounds = false
+
+        layer.shouldRasterize = true
+        layer.rasterizationScale = UIScreen.main.scale
+    }
 }

@@ -11,12 +11,12 @@ import Alamofire
 
 public protocol DataRequestable {
     static func request<T: Decodable>(with endPoint: Endpointable, result: @escaping (Result<T, WebServiceError>)->())
+    static func download(item: DownloadRequestable, result: @escaping (Result<MDDownloadResponse, WebServiceError>) -> Void)
     static var noInternetHandler: ((Endpointable)->() )? { get set }
     static var unAuthorizedHandler: ((Endpointable)->() )? { get set }
     
     static func stopAllRequests()
 }
-
 
 public class NetworkLayer: DataRequestable {
     public static var unAuthorizedHandler: ((Endpointable) -> ())?
@@ -98,6 +98,34 @@ public class NetworkLayer: DataRequestable {
             result(.failure(.undefined(statusCode: statusCode!, body: response.data, response: httpResponse)))
         }
     }
+
+    private static func processDownloadData(response: AFDownloadResponse<URL?>, result: @escaping (Result<MDDownloadResponse, WebServiceError>) -> Void) {
+        let statusCode = response.response?.status
+        guard let responseType = response.response?.status?.responseType else {
+            result(.failure(.noStatusCode))
+            return
+        }
+        let httpResponse = response.response!
+        
+        switch responseType {
+        case .serverError:
+            result(.failure(.serverError(statusCode: statusCode! , body: response.resumeData, response: httpResponse)))
+        case .informational:
+            result(.failure(.noStatusCode))
+        case .success, .redirection:
+            switch response.result {
+            case .success:
+                result(.success(MDDownloadResponse(fileUrl: response.fileURL)))
+
+            case .failure(let error):
+                result(.failure(.dataParsing(error: error)))
+            }
+        case .clientError:
+            result(.failure(.clientError(statusCode: statusCode!, body: response.resumeData, response: httpResponse)))
+        case .undefined:
+            result(.failure(.undefined(statusCode: statusCode!, body: response.resumeData, response: httpResponse)))
+        }
+    }
     
     private static func regularRequest<T>(with endPoint: Endpointable, result: @escaping (Result<T, WebServiceError>) -> ()) where T : Decodable {
         let request = endPoint.urlRequest(headers: [:])
@@ -137,10 +165,24 @@ public class NetworkLayer: DataRequestable {
             processData(with: endPoint, response: response, result: result)
         }
     }
-    
-    
+
+    public static func download(item: DownloadRequestable, result: @escaping (Result<MDDownloadResponse, WebServiceError>) -> Void) {
+        let destination: DownloadRequest.Destination = { _, _ in
+            var documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            if let folder = item.folder {
+                if #available(iOS 14.0, *) {
+                    documentsURL = documentsURL.appendingPathComponent(folder, conformingTo: .folder)
+                } else {
+                    documentsURL = documentsURL.appendingPathComponent(folder)
+                }
+            }
+            let fileURL = documentsURL.appendingPathComponent(item.fileName)
+
+            return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
+        }
+
+        AF.download(item.url, to: destination).response { response in
+            self.processDownloadData(response: response, result: result)
+        }
+    }
 }
-
-
-
-

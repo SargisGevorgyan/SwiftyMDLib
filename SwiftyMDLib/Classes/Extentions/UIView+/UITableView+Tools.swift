@@ -1,5 +1,5 @@
 //
-//  UItableView+Tools.swift
+//  UITableView+Tools.swift
 //  Alamofire
 //
 //  Created by Sargis Gevorgyan on 3/30/20.

@@ -8,7 +8,6 @@
 import Foundation
 import Alamofire
 
-
 public struct EndpointDefaultConfigs {
     public static var scheme = "https"
     public static var host = "google.ru"
@@ -32,7 +31,6 @@ public protocol Endpointable {
     
     func getUrl()->URL
     func urlRequest(headers: [String:String]) -> URLRequest
-    
 }
 
 public extension Endpointable {
@@ -72,7 +70,6 @@ public extension Endpointable {
         
         return components.url!
     }
-    
     
     func getHeaders(headers: [String:String]) -> [String:String] {
         var dict = [String: String]()

@@ -58,3 +58,47 @@ public extension UITextField {
         selectedTextRange = textRange(from: position, to: position)
     }
 }
+
+public extension UIView {
+    func validateDecimalNumberText(for textField: UITextField, replacementStringRange: NSRange, string: String) -> Bool {
+
+        // Back key
+        if string.isEmpty {
+            return true
+        }
+
+        // Allowed charachters include decimal digits and the separator determined by number foramtter's (current) locale
+        let numberFormatter = NumberFormatter()
+        numberFormatter.maximumFractionDigits = 1
+        let allowedCharacters = CharacterSet.decimalDigits.union(CharacterSet(charactersIn: numberFormatter.decimalSeparator))
+        let characterSet = CharacterSet(charactersIn: string)
+
+        // False if string contains not allowed characters
+        if !allowedCharacters.isSuperset(of: characterSet) {
+            return false
+        }
+
+        // Check for decimal separator
+        if let input = textField.text {
+            if let range = input.range(of: numberFormatter.decimalSeparator) {
+                let endIndex = input.index(input.startIndex, offsetBy: input.distance(from: input.startIndex, to: range.upperBound))
+                let decimals = input[endIndex...]
+
+                // If the replacement string contains a decimal seperator and there is already one, return false
+                if input.contains(numberFormatter.decimalSeparator) && string == numberFormatter.decimalSeparator {
+                    return false
+                }
+
+                // If a replacement string is before the separator then true
+                if replacementStringRange.location < endIndex.encodedOffset {
+                    return true
+                } else {
+                    // If the string will exceed the max number of fraction digits, then return false, else true
+                    return string.count + decimals.count <= numberFormatter.maximumFractionDigits
+                }
+            }
+        }
+
+        return true
+    }
+}
