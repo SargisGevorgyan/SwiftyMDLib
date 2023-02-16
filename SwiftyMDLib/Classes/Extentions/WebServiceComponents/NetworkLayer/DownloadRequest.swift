@@ -16,5 +16,5 @@ public protocol DownloadRequestable {
 
 
 public struct MDDownloadResponse {
-    let fileUrl: URL?
+    public let fileUrl: URL?
 }

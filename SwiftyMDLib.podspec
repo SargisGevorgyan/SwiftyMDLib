@@ -8,7 +8,7 @@ s.summary = "SwiftyMDLib MagicDevs Common Lib."
 s.requires_arc = true
 
 # 2
-s.version = "1.2.3"
+s.version = "1.2.4"
 
 # 3
 s.license = { :type => "MIT", :file => "LICENSE" }
