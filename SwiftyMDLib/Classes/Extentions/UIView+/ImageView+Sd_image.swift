@@ -13,7 +13,7 @@ public extension UIImage {
     }
     
     func removeFromCache(url: String, completion: (()->())? = nil) {
-        SDWebImageManager.shared.imageCache.removeImage(forKey: url, cacheType: .all, completion: completion)
+        SDWebImageManager.shared.imageCache.removeImage?(forKey: url, cacheType: .all, completion: completion)
     }
 }
 

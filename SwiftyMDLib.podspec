@@ -8,13 +8,13 @@ s.summary = "SwiftyMDLib MagicDevs Common Lib."
 s.requires_arc = true
 
 # 2
-s.version = "1.2"
+s.version = "1.2.1"
 
 # 3
 s.license = { :type => "MIT", :file => "LICENSE" }
 
 # 4 - Replace with your name and e-mail address
-s.author = { "Masgic Developers" => "gevorgian.sargis@gmail.com" }
+s.author = { "Magic Developers" => "gevorgian.sargis@gmail.com" }
 
 # 5 - Replace this URL with your own GitHub page's URL (from the address bar)
 s.homepage = "https://github.com/SargisGevorgyan/SwiftyMDLib"
@@ -26,7 +26,7 @@ s.source = { :git => "https://github.com/SargisGevorgyan/SwiftyMDLib.git",
 # 7
 s.framework = "UIKit"
 s.dependency 'Alamofire'
-s.dependency 'SDWebImage'
+s.dependency 'SDWebImage', 'SDWebImage 5.15.2'
 s.dependency 'IQKeyboardManagerSwift'
 s.dependency 'lottie-ios'
 
