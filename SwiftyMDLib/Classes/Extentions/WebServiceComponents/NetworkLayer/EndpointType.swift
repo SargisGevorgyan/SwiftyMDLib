@@ -16,20 +16,21 @@ public struct EndpointDefaultConfigs {
 }
 
 public protocol Endpointable {
-    var internetRequired: Bool {get}
-    var isMultipart: Bool {get}
-    var method: HTTPMethod {get}
-    var additionalHeaders: HTTPHeaders {get}
+    var internetRequired: Bool { get }
+    var isMultipart: Bool { get }
+    var method: HTTPMethod { get }
+    var additionalHeaders: HTTPHeaders { get }
+    var timeoutInterval: TimeInterval { get }
     
-    var scheme: String? {get}
-    var host: String? {get}
-    var path: String {get}
+    var scheme: String? { get }
+    var host: String? { get }
+    var path: String { get }
 //    var withHeaders: Bool {get}
-    var pathParams: [URLQueryItem]? {get}
-    var data: Data? {get}
-    var files: Files? {get set}
+    var pathParams: [URLQueryItem]? { get }
+    var data: Data? { get }
+    var files: Files? { get set }
     
-    func getUrl()->URL
+    func getUrl() -> URL
     func urlRequest(headers: [String:String]) -> URLRequest
 }
 
@@ -55,6 +56,10 @@ public extension Endpointable {
     
       var files: Files? {
         return nil
+    }
+
+    var timeoutInterval: TimeInterval {
+        return 90
     }
     
 //    var withHeaders: Bool {
@@ -91,7 +96,7 @@ public extension Endpointable {
         
         request.httpBody = data
         request.httpMethod = method.rawValue
-        request.timeoutInterval = 80
+        request.timeoutInterval = timeoutInterval
 
         request.allHTTPHeaderFields = getHeaders(headers: headers)
         
