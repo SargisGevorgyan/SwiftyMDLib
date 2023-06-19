@@ -12,14 +12,8 @@ s.version = "1.2.6"
 
 # 3
 s.license = { :type => "MIT", :file => "LICENSE" }
-
-# 4 - Replace with your name and e-mail address
 s.author = { "Magic Developers" => "gevorgian.sargis@gmail.com" }
-
-# 5 - Replace this URL with your own GitHub page's URL (from the address bar)
 s.homepage = "https://github.com/SargisGevorgyan/SwiftyMDLib"
-
-# 6 - Replace this URL with your own Git URL from "Quick Setup"
 s.source = { :git => "https://github.com/SargisGevorgyan/SwiftyMDLib.git",
 :tag => "#{s.version}" }
 
@@ -45,7 +39,12 @@ s.source_files = 'SwiftyMDLib/Classes/**/*.{swift,m,h}'
 # }
 
 # 9
-s.resources = "SwiftyMDLib/Resources/**/*.{otf,xcdatamodeld,xcassets}"
+#s.resources = "SwiftyMDLib/Resources/**/*.{otf,xcdatamodeld,xcassets}"
+
+s.resources = [
+'SwiftyMDLib/Resources/**/*.xcdatamodeld',
+'SwiftyMDLib/Resources/**/*.otf',
+]
 
 # 10
 s.swift_version = "5.0"
