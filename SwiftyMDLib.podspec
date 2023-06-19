@@ -5,10 +5,10 @@ s.platform = :ios
 s.ios.deployment_target = '13.0'
 s.name = "SwiftyMDLib"
 s.summary = "SwiftyMDLib MagicDevs Common Lib."
-s.requires_arc = true
+#s.requires_arc = true
 
 # 2
-s.version = "1.2.7"
+s.version = "1.2.7.1"
 
 # 3
 s.license = { :type => "MIT", :file => "LICENSE" }
