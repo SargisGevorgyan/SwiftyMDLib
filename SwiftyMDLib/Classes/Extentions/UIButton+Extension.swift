@@ -9,8 +9,8 @@ import Foundation
 
 public extension UIButton {
     func addUndlerLineFor(_ title:String, for state: UIControl.State = .normal) {
-        guard let text = self.titleLabel?.text else { return }
-        guard let range = text.range(of: title) else {return}
+        guard let text = self.title(for: state) else { return }
+        guard let range = text.range(of: title) else { return }
         let titleRange = NSRange(range, in: text)
         let attributedString = NSMutableAttributedString(string: text)
         attributedString.addAttribute(NSAttributedString.Key.underlineColor, value: self.titleColor(for: state)!, range: titleRange)
