@@ -108,3 +108,27 @@ public extension Sequence {
         return result
     }
 }
+
+extension Array where Element: Equatable {
+    func subtracting(_ array: Array<Element>) -> Array<Element> {
+        var result: Array<Element> = []
+        var toSub = array
+
+        for i in self {
+            if let index = toSub.firstIndex(of: i) {
+                toSub.remove(at: index)
+                continue
+            }
+            else {
+                result.append(i)
+            }
+        }
+        return result
+    }
+}
+
+public struct Sum {
+  public static func sum(_ numbers: Int...) -> Int {
+    return numbers.reduce(0, +)
+  }
+}
