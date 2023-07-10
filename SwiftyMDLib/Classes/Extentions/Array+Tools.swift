@@ -109,7 +109,7 @@ public extension Sequence {
     }
 }
 
-extension Array where Element: Equatable {
+public extension Array where Element: Equatable {
     func subtracting(_ array: Array<Element>) -> Array<Element> {
         var result: Array<Element> = []
         var toSub = array
