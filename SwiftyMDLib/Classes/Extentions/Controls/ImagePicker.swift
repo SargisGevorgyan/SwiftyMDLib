@@ -20,7 +20,7 @@ open class ImagePickerAlertController: UIViewController, UINavigationControllerD
     private var imagePicker = UIImagePickerController()
 
     open weak var delegate: ImagePickerAlertControllerDelegate?
-    var isCropperRequired = true
+    open var isCropperRequired = true
 
     open var deleteImageAction: (() -> Void)?
 
