@@ -138,7 +138,13 @@ public class NetworkLayer: DataRequestable {
                 processData(with: endPoint, response: response, result: result)
             }
         } else {
-            URLSession.shared.dataTask(with: request) {(data, response, error) in
+            
+            let session = URLSession.shared
+            session.configuration.shouldUseExtendedBackgroundIdleMode = true
+            session.configuration.urlCache = nil
+            session.configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
+
+            session.dataTask(with: request) {(data, response, error) in
                 let afResult = AFResult<Any>(value: data, error: error?.asAFError)
                 let resp = AFDataResponse<Any>(request: request, response: response as? HTTPURLResponse, data: data, metrics: nil, serializationDuration: 0, result: afResult)
 
