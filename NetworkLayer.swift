@@ -1,6 +1,8 @@
 //
 //  NetworkLayer.swift
+//  AlamofireNewVersion
 //
+//  Created by Davit Ghushchyan on 2/2/21.
 //
 
 import Foundation
@@ -12,18 +14,18 @@ public protocol DataRequestable {
     static func download(item: DownloadRequestable, result: @escaping (Result<MDDownloadResponse, WebServiceError>) -> Void)
     static var noInternetHandler: ((Endpointable)->() )? { get set }
     static var unAuthorizedHandler: ((Endpointable)->() )? { get set }
-
+    
     static func stopAllRequests()
 }
 
 public class NetworkLayer: DataRequestable {
     public static var unAuthorizedHandler: ((Endpointable) -> ())?
     public static var noInternetHandler: ((Endpointable) -> ())?
-
+    
     public static func stopAllRequests() {
         AF.cancelAllRequests()
     }
-
+    
     public  static func request<T>(with endPoint: Endpointable, result: @escaping (Result<T, WebServiceError>) -> ()) where T : Decodable {
         if endPoint.internetRequired {
             if !(Network.reachability?.isConnectedToNetwork ?? false) {
@@ -39,8 +41,8 @@ public class NetworkLayer: DataRequestable {
             regularRequest(with: endPoint, result: result)
         }
     }
-
-
+    
+    
     private static func processData<T>(with endPoint: Endpointable, response: AFDataResponse<Any>, result: @escaping (Result<T, WebServiceError>) -> ()) where T : Decodable {
         let statusCode = response.response?.status
         guard let responseType = response.response?.status?.responseType else {
@@ -48,8 +50,8 @@ public class NetworkLayer: DataRequestable {
             return
         }
         let httpResponse = response.response!
-
-
+        
+        
         switch responseType {
         case .serverError:
             result(.failure(.serverError(statusCode: statusCode! , body: response.data, response: httpResponse)))
@@ -59,7 +61,7 @@ public class NetworkLayer: DataRequestable {
             switch response.result {
             case .success(let value):
                 var data: Data?
-
+                
                 if let value = value as? [String: Any] {
                     do {
                         let jsonData = try JSONSerialization.data(withJSONObject: value, options: .prettyPrinted)
@@ -79,17 +81,15 @@ public class NetworkLayer: DataRequestable {
                 let decoder = JSONDecoder()
                 do {
                     let reqJSONStr = String(data: data!, encoding: .utf8)
-                    print("From Request: ", endPoint.getUrl().absoluteURL)
-                    print("Used Alamofire: ", endPoint.useAF)
                     print("Response: ", reqJSONStr ?? "")
                     let responseData = try decoder.decode(T.self, from: data!)
                     result(.success(responseData))
                 } catch {
-
+                    
                     result(.failure(.dataParsing(error: error)))
                     print("Can't decode ", error.localizedDescription)
                 }
-
+                
             case .failure(let error):
                 result(.failure(.dataParsing(error: error)))
             }
@@ -110,7 +110,7 @@ public class NetworkLayer: DataRequestable {
             return
         }
         let httpResponse = response.response!
-
+        
         switch responseType {
         case .serverError:
             result(.failure(.serverError(statusCode: statusCode! , body: response.resumeData, response: httpResponse)))
@@ -130,27 +130,24 @@ public class NetworkLayer: DataRequestable {
             result(.failure(.undefined(statusCode: statusCode!, body: response.resumeData, response: httpResponse)))
         }
     }
-
+    
     private static func regularRequest<T>(with endPoint: Endpointable, result: @escaping (Result<T, WebServiceError>) -> ()) where T : Decodable {
         let request = endPoint.urlRequest(headers: [:])
-        if endPoint.useAF {
-            AF.request(request).responseJSON { (response: DataResponse<Any,AFError>) in
-                processData(with: endPoint, response: response, result: result)
+        URLSession.shared.dataTask(with: request) {(data, response, error) in
+            let afResult = AFResult<Any>(value: data, error: error?.asAFError)
+            let resp = AFDataResponse<Any>(request: request, response: response as? HTTPURLResponse, data: data, metrics: nil, serializationDuration: 0, result: afResult)
+
+            DispatchQueue.main.async {
+                processData(with: endPoint, response: resp, result: result)
             }
-        } else {
-            URLSession.shared.dataTask(with: request) {(data, response, error) in
-                let afResult = AFResult<Any>(value: data, error: error?.asAFError)
-                let resp = AFDataResponse<Any>(request: request, response: response as? HTTPURLResponse, data: data, metrics: nil, serializationDuration: 0, result: afResult)
 
-                DispatchQueue.main.async {
-                    processData(with: endPoint, response: resp, result: result)
-                }
-
-            }.resume()
-        }
+        }.resume()
+//        AF.request(request).responseJSON { (response: DataResponse<Any,AFError>) in
+//            processData(with: endPoint, response: response, result: result)
+//        }
     }
-
-
+    
+    
     private static func multipartRequest<T>(with endPoint: Endpointable, result: @escaping (Result<T, WebServiceError>) -> ()) where T : Decodable {
         let jsonParams  = try? JSONSerialization.jsonObject(with: endPoint.data ?? Data(), options: .allowFragments) as? [String: Any]
         func attachMultiPartFormData(files: Files? ,multipartFormData: MultipartFormData) {
