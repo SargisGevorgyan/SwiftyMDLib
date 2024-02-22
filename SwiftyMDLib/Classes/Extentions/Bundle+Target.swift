@@ -1,8 +1,6 @@
 //
 //  Bundle+Target.swift
-//  Vain_ios
 //
-//  Created by Davit Ghushchyan on 4/20/20.
 //  Copyright © 2020 MagicDevs. All rights reserved.
 //
 

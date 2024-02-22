@@ -42,7 +42,8 @@ class ViewController: UIViewController {
                 print(error.localizedDescription)
             }
         }
-        
+
+        /*
         let image = #imageLiteral(resourceName: "noConnection")
         let jsonData = ["goalID": 0, "type": 0, "main": 1]
         let data =  try? JSONEncoder().encode(jsonData)
@@ -61,6 +62,7 @@ class ViewController: UIViewController {
                 print(data)
             }
         }
+         */
     }
 
 }
@@ -83,6 +85,7 @@ struct WelcomeEndpoint: Endpointable {
     
     var method: HTTPMethod = .get
     var path: String = "/todos/1"
+    var useAF: Bool = false
 }
 
 struct UploadImageEndpoint: Endpointable {

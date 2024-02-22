@@ -2,7 +2,6 @@
 //  FIleType.swift
 //  AlamofireNewVersion
 //
-//  Created by Davit Ghushchyan on 2/2/21.
 //
 
 import Foundation

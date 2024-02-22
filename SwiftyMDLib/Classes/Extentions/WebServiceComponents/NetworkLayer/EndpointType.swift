@@ -1,8 +1,5 @@
 //
 //  EndpointType.swift
-//  AlamofireNewVersion
-//
-//  Created by Davit Ghushchyan on 2/2/21.
 //
 
 import Foundation
@@ -12,12 +9,14 @@ public struct EndpointDefaultConfigs {
     public static var scheme = "https"
     public static var host = "google.ru"
     public static var isMultyPartByDefault = false
+    public static var useAF = true
     public static var onTopHeaders: [String:String] = ["os":"iOS", "deviceId": UIDevice.current.identifierForVendor?.uuidString ?? ""]
 }
 
 public protocol Endpointable {
     var internetRequired: Bool { get }
     var isMultipart: Bool { get }
+    var useAF: Bool { get }
     var method: HTTPMethod { get }
     var additionalHeaders: HTTPHeaders { get }
     var timeoutInterval: TimeInterval { get }
@@ -25,7 +24,7 @@ public protocol Endpointable {
     var scheme: String? { get }
     var host: String? { get }
     var path: String { get }
-//    var withHeaders: Bool {get}
+    //    var withHeaders: Bool {get}
     var pathParams: [URLQueryItem]? { get }
     var data: Data? { get }
     var files: Files? { get set }
@@ -38,33 +37,37 @@ public extension Endpointable {
     var scheme: String? {
         return nil
     }
-      var host: String? {
+    var host: String? {
         return nil
     }
-     var pathParams: [URLQueryItem]? {
+    var pathParams: [URLQueryItem]? {
         return nil
     }
-     var internetRequired: Bool {
+    var internetRequired: Bool {
         return true
     }
-      var additionalHeaders: HTTPHeaders {
+    var additionalHeaders: HTTPHeaders {
         return HTTPHeaders()
     }
-      var isMultipart: Bool {
+    var isMultipart: Bool {
         return EndpointDefaultConfigs.isMultyPartByDefault
     }
     
-      var files: Files? {
+    var useAF: Bool {
+        return EndpointDefaultConfigs.useAF
+    }
+    
+    var files: Files? {
         return nil
     }
-
+    
     var timeoutInterval: TimeInterval {
         return 90
     }
     
-//    var withHeaders: Bool {
-//        return true
-//    }
+    //    var withHeaders: Bool {
+    //        return true
+    //    }
     
     func getUrl() -> URL {
         var components = URLComponents()
@@ -80,7 +83,7 @@ public extension Endpointable {
         var dict = [String: String]()
         dict = headers
         dict["Content-Type"] = "application/json"
-
+        
         for (name, value) in additionalHeaders.dictionary {
             dict[name] = value
         }
@@ -97,7 +100,7 @@ public extension Endpointable {
         request.httpBody = data
         request.httpMethod = method.rawValue
         request.timeoutInterval = timeoutInterval
-
+        
         request.allHTTPHeaderFields = getHeaders(headers: headers)
         
         return request

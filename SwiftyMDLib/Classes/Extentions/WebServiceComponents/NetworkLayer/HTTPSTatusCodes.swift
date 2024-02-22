@@ -1,9 +1,5 @@
 //
 //  HTTPSTatusCodes.swift
-//  Vain_ios
-//
-//  Created by Davit Ghushchyan on 4/10/20.
-//  Copyright © 2020 MagicDevs. All rights reserved.
 //
 
 import Foundation
