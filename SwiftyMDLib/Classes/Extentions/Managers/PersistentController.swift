@@ -36,15 +36,17 @@ class PersistentController {
         self.containerName = containerName
     }
     
-    func saveViewContext() {
-        saveContext(persistentContainer.viewContext)
+    func saveViewContext(refreshAll: Bool) {
+        saveContext(persistentContainer.viewContext, refreshAll: refreshAll)
     }
     
-    func saveContext(_ context: NSManagedObjectContext) {
+    func saveContext(_ context: NSManagedObjectContext, refreshAll: Bool) {
         if context.hasChanges {
             do {
                 try context.save()
-                viewContext.refreshAllObjects()
+                if refreshAll {
+                    viewContext.refreshAllObjects()
+                }
             } catch {
                 let nserror = error as NSError
                 print("\n")
@@ -60,7 +62,7 @@ class PersistentController {
         }
     }
     
-    func eraseEntity(_ name: EntityName) {
+    func eraseEntity(_ name: EntityName, refreshAll: Bool) {
         let context = viewContext
         let requestToDelete = NSFetchRequest<NSFetchRequestResult>(entityName: name.rawValue)
         let batchDelete = NSBatchDeleteRequest(fetchRequest: requestToDelete)
@@ -70,7 +72,7 @@ class PersistentController {
         } catch  {
             print("Error while erasing data DataManager row 134")
         }
-        saveViewContext()
+        saveViewContext(refreshAll: refreshAll)
     }
     
     

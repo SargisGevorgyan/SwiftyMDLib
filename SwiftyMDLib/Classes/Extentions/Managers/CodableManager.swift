@@ -18,7 +18,7 @@ open class CodableManager {
     private init() {
     }
     
-    open func saveModelFor<T:Codable>(key:String, model: T, isKeepingPermonantly: Bool = false) {
+    open func saveModelFor<T:Codable>(key:String, model: T, isKeepingPermonantly: Bool = false, refreshAll: Bool = false) {
         let data = try? encoder.encode(model)
         if let object = getFromDB(key: getKeyFor(key)) {
             object.data = data
@@ -30,7 +30,7 @@ open class CodableManager {
             object.isKeepingPermonantly = isKeepingPermonantly
         }
         
-        persistentController.saveViewContext()
+        persistentController.saveViewContext(refreshAll: refreshAll)
     }
     
     open func saveStringFor(key:String, value: String? ) {
@@ -88,7 +88,7 @@ open class CodableManager {
         return object?.first
     }
     
-    open func eraseDB() {
+    open func eraseDB(refreshAll: Bool = false) {
             let context = persistentController.viewContext
             let request: NSFetchRequest<StoredModel> = StoredModel.fetchRequest()
             
@@ -99,7 +99,7 @@ open class CodableManager {
                     context.delete(item)
                 }
             }
-            persistentController.saveContext(context)
+            persistentController.saveContext(context, refreshAll: refreshAll)
     //        persistentController.eraseEntity(.storedModel)
         }
     
