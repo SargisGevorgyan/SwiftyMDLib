@@ -20,10 +20,11 @@ it, simply add the following line to your Podfile:
 pod 'SwiftyMDLib'
 ```
 
-## Author
+### Author
 
 SargisGevorgyan, gevorgian.sargis@gmail.com
 
-## License
+### License
 
 SwiftyMDLib is available under the MIT license. See the LICENSE file for more info.
+
